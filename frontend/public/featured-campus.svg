@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <rect width="900" height="520" fill="#87CEEB"/>
+  <rect y="320" width="900" height="200" fill="#5a8f4a"/>
+  <ellipse cx="120" cy="280" rx="70" ry="90" fill="#3d7a35"/>
+  <ellipse cx="780" cy="270" rx="85" ry="100" fill="#4a8f3f"/>
+  <ellipse cx="650" cy="300" rx="55" ry="70" fill="#c45a2a" opacity="0.85"/>
+  <rect x="280" y="180" width="340" height="200" fill="#8B4513"/>
+  <polygon points="280,180 450,80 620,180" fill="#6b2f1a"/>
+  <rect x="330" y="240" width="50" height="70" fill="#f5e6c8"/>
+  <rect x="420" y="240" width="50" height="70" fill="#f5e6c8"/>
+  <rect x="510" y="240" width="50" height="70" fill="#f5e6c8"/>
+  <rect x="395" y="310" width="70" height="70" fill="#4a3728"/>
+  <rect x="250" y="200" width="30" height="180" fill="#6b4423"/>
+  <rect x="620" y="200" width="30" height="180" fill="#6b4423"/>
+</svg>
