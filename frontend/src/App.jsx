@@ -22,6 +22,9 @@ function App() {
   const [search, setSearch] = useState('')
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [refreshKey, setRefreshKey] = useState(0)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
 
   const campusPosts = useMemo(
     () => fetchPosts({ campus }),
@@ -90,6 +93,7 @@ function App() {
     setSelectedPostId(null)
     setView((current) => (current === 'tour' ? 'feed' : 'tour'))
   }
+
 
   return (
     <div className="min-h-svh bg-white">

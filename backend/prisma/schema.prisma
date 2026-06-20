@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String    
+  role          Role      @default(USER)
+  comments      Comment[]
+  likes         Like[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Post {
+  id       Int       @id @default(autoincrement())
+  featured Boolean   @default(false)
+  category String
+  campus   String
+  date     String
+  title    String
+  excerpt  String
+  body     String
+  image    String
+  tags     String[]
+  reads    Int       @default(0)
+
+  comments Comment[]
+  likes    Like[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  sentiment String
+  createdAt DateTime @default(now())
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@unique([postId, userId])
+}
+
+model CampusTourStop {
+  id          String @id @default(cuid())
+  campus      String
+  name        String
+  description String
+  duration    String
+  panorama    Json?
+}
