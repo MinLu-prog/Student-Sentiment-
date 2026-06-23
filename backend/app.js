@@ -15,6 +15,10 @@ app.use('/api/users', require('./src/routes/users'))
 app.use('/api/comments', require('./src/routes/comment'))
 app.use('/api/likes', require('./src/routes/like'))
 
+app.get('/api', (_req, res) => {
+  res.json({ message: 'Hello from the backend!' })
+})
+
 app.use(unknownEndpoint)
 app.use(errorHandler)
 

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { GlobalNav } from '@/components/GlobalNav'
 import { HeroHeader } from '@/components/HeroHeader'
 import { CategoryFilter } from '@/components/CategoryFilter'
@@ -14,6 +14,7 @@ import {
   getStats,
   togglePostLike,
 } from '@/services/postsApi'
+import { ensureSession, clearSession } from '@/services/auth'
 
 function App() {
   const [campus, setCampus] = useState('main')
@@ -22,23 +23,57 @@ function App() {
   const [search, setSearch] = useState('')
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [refreshKey, setRefreshKey] = useState(0)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
+  const [campusPosts, setCampusPosts] = useState([])
+  const [tourStops, setTourStops] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const campusPosts = useMemo(
-    () => fetchPosts({ campus }),
-    [campus, refreshKey],
-  )
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadData() {
+      setLoading(true)
+      setError(null)
+
+      try {
+        // Auth is optional — posts and tour are public; login is for likes only
+        ensureSession().catch(() => {
+          clearSession()
+        })
+
+        const [posts, stops] = await Promise.all([
+          fetchPosts({ campus }),
+          fetchCampusTourStops(campus),
+        ])
+
+        if (!cancelled) {
+          setCampusPosts(posts)
+          setTourStops(stops)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || 'Failed to load data from the server.')
+          setCampusPosts([])
+          setTourStops([])
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
+    }
+
+    loadData()
+
+    return () => {
+      cancelled = true
+    }
+  }, [campus, refreshKey])
 
   const selectedPost = useMemo(
     () => campusPosts.find((post) => post.id === selectedPostId) ?? null,
     [campusPosts, selectedPostId],
-  )
-
-  const tourStops = useMemo(
-    () => fetchCampusTourStops(campus),
-    [campus],
   )
 
   const filteredPosts = useMemo(() => {
@@ -84,9 +119,13 @@ function App() {
     setView('feed')
   }
 
-  function handleToggleLike(postId) {
-    togglePostLike(postId)
-    refreshPosts()
+  async function handleToggleLike(postId) {
+    try {
+      await togglePostLike(postId)
+      refreshPosts()
+    } catch (err) {
+      setError(err.message || 'Failed to update like.')
+    }
   }
 
   function handleCampusTour() {
@@ -94,6 +133,109 @@ function App() {
     setView((current) => (current === 'tour' ? 'feed' : 'tour'))
   }
 
+  function renderMainContent() {
+    if (loading) {
+      return (
+        <div className="flex min-h-[320px] items-center justify-center text-slate-500">
+          Loading campus data…
+        </div>
+      )
+    }
+
+    if (error) {
+      return (
+        <div className="mx-auto max-w-lg rounded-2xl border border-red-200 bg-red-50 p-6 text-center text-red-700">
+          <p className="font-semibold">Could not connect to the API</p>
+          <p className="mt-2 text-sm">{error}</p>
+          <p className="mt-3 text-xs text-red-600/80">
+            Make sure the backend is running on port 5000 (`npm run dev` in backend/).
+          </p>
+          <button
+            type="button"
+            onClick={refreshPosts}
+            className="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+          >
+            Retry
+          </button>
+        </div>
+      )
+    }
+
+    if (view === 'tour') {
+      return <CampusTour stops={tourStops} campus={campus} />
+    }
+
+    if (selectedPost) {
+      return (
+        <PostDetail
+          post={selectedPost}
+          onBack={() => setSelectedPostId(null)}
+          onToggleLike={handleToggleLike}
+        />
+      )
+    }
+
+    if (view === 'analysis') {
+      if (filteredPosts.length === 0) {
+        return <EmptyState />
+      }
+
+      return (
+        <div className="mx-auto max-w-3xl space-y-6">
+          <div className="text-left">
+            <h2 className="text-2xl font-bold text-[#1a2b5a]">Comment Analysis</h2>
+            <p className="mt-2 text-slate-600">
+              Sentiment breakdown from live comment data on each story.
+            </p>
+          </div>
+          {filteredPosts.map((post) => (
+            <div key={post.id} className="text-left">
+              <button
+                type="button"
+                onClick={() => setSelectedPostId(post.id)}
+                className="mb-3 text-left text-base font-semibold text-[#1a2b5a] hover:underline"
+              >
+                {post.title}
+              </button>
+              <SentimentSnapshot sentiment={post.sentiment} />
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    if (filteredPosts.length === 0) {
+      return <EmptyState />
+    }
+
+    return (
+      <>
+        {featuredPost && (
+          <FeaturedPost
+            post={featuredPost}
+            onSelect={(post) => setSelectedPostId(post.id)}
+          />
+        )}
+
+        {remainingPosts.length > 0 && (
+          <section>
+            <h2 className="mb-4 text-left text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+              More Stories
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {remainingPosts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onSelect={(item) => setSelectedPostId(item.id)}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+      </>
+    )
+  }
 
   return (
     <div className="min-h-svh bg-white">
@@ -122,71 +264,7 @@ function App() {
         </>
       )}
 
-      <main className="bg-[#f8f9fa] px-5 py-8 sm:px-8">
-        {view === 'tour' ? (
-          <CampusTour stops={tourStops} campus={campus} />
-        ) : selectedPost ? (
-          <PostDetail
-            post={selectedPost}
-            onBack={() => setSelectedPostId(null)}
-            onToggleLike={handleToggleLike}
-          />
-        ) : view === 'analysis' ? (
-          filteredPosts.length > 0 ? (
-            <div className="mx-auto max-w-3xl space-y-6">
-              <div className="text-left">
-                <h2 className="text-2xl font-bold text-[#1a2b5a]">Comment Analysis</h2>
-                <p className="mt-2 text-slate-600">
-                  Sentiment breakdown derived from comment records — ready to swap
-                  for your backend API.
-                </p>
-              </div>
-              {filteredPosts.map((post) => (
-                <div key={post.id} className="text-left">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPostId(post.id)}
-                    className="mb-3 text-left text-base font-semibold text-[#1a2b5a] hover:underline"
-                  >
-                    {post.title}
-                  </button>
-                  <SentimentSnapshot sentiment={post.sentiment} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState />
-          )
-        ) : filteredPosts.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <>
-            {featuredPost && (
-              <FeaturedPost
-                post={featuredPost}
-                onSelect={(post) => setSelectedPostId(post.id)}
-              />
-            )}
-
-            {remainingPosts.length > 0 && (
-              <section>
-                <h2 className="mb-4 text-left text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
-                  More Stories
-                </h2>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {remainingPosts.map((post) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      onSelect={(item) => setSelectedPostId(item.id)}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-          </>
-        )}
-      </main>
+      <main className="bg-[#f8f9fa] px-5 py-8 sm:px-8">{renderMainContent()}</main>
     </div>
   )
 }

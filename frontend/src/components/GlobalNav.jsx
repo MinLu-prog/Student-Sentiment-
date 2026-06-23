@@ -1,7 +1,4 @@
 import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   LayoutGrid,
   MapPinned,
   MessageCircle,
@@ -25,35 +22,25 @@ export function GlobalNav({
 }) {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-4 py-2.5 sm:px-6">
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
-        <button
-          type="button"
-          className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
-          aria-label="Next"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
-        <div className="ml-1 flex h-7 w-7 items-center justify-center rounded bg-[#1a2b5a] text-[10px] font-bold text-white">
-          MIIT
+      <a href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+        <img
+          src="/miit-logo.svg"
+          alt=""
+          width={36}
+          height={36}
+          className="h-9 w-9 shrink-0"
+        />
+        <div className="min-w-0 text-left">
+          <p className="truncate text-sm font-semibold leading-tight text-slate-900 sm:text-base">
+            MIIT
+          </p>
+          <p className="truncate text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500 sm:text-[11px]">
+            Campus Activities
+          </p>
         </div>
-      </div>
+      </a>
 
-      <button
-        type="button"
-        className="hidden items-center gap-1 text-sm text-slate-700 hover:text-slate-900 sm:flex"
-      >
-        University Activities Blog Post
-        <ChevronDown className="h-4 w-4 text-slate-400" />
-      </button>
-
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
         <Select value={campus} onValueChange={onCampusChange}>
           <SelectTrigger
             className="h-8 min-w-[120px] border-slate-200 bg-white text-xs text-slate-800 sm:min-w-[140px]"

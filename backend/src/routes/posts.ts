@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
-import { authenticateToken, requireAdmin } from "../utils/middleware";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../utils/middleware";
 
 const postsRouter = Router();
 
@@ -69,8 +69,8 @@ const postInclude = {
   likes: { select: { userId: true } },
 };
 
-// GET all posts — public
-postsRouter.get("/", async (req: Request, res: Response) => {
+// GET all posts — public (optional auth for likedByCurrentUser)
+postsRouter.get("/", optionalAuthenticateToken, async (req: Request, res: Response) => {
   try {
     const { campus } = req.query;
     const currentUserId = req.user?.id;
@@ -83,13 +83,15 @@ postsRouter.get("/", async (req: Request, res: Response) => {
 
     res.json(posts.map((p) => enrichPost(p, currentUserId)));
   } catch (error) {
+    console.error("Failed to fetch posts:", error);
     res.status(500).json({ error: "Failed to fetch posts" });
   }
 });
 
-// GET post by id — public
+// GET post by id — public (optional auth for likedByCurrentUser)
 postsRouter.get(
   "/:id",
+  optionalAuthenticateToken,
   async (req: Request<PostParams>, res: Response) => {
     try {
       const id = Number(req.params.id);
@@ -107,6 +109,7 @@ postsRouter.get(
 
       res.json(enrichPost(post, currentUserId));
     } catch (error) {
+      console.error("Failed to fetch post:", error);
       res.status(500).json({ error: "Failed to fetch post" });
     }
   }
