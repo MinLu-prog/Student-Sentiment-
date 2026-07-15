@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Compass, MapPin, RotateCw } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Compass, Map as MapIcon, MapPin, RotateCw } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PanoramaViewer } from '@/components/panorama/PanoramaViewer'
+import { CampusMap } from '@/components/CampusMap'
+import { CampusGallery } from '@/components/CampusGallery'
 import { CAMPUS_AREAS } from '@/data/posts'
 import { hasPanorama } from '@/config/panorama'
 
@@ -16,13 +18,23 @@ export function CampusTour({ stops, campus }) {
   }, [stops])
 
   const [activeStopId, setActiveStopId] = useState(defaultStopId)
+  const [mode, setMode] = useState('map') // 'map' | 'immersive'
 
-  useEffect(() => {
+  // Reset the active stop when the available stops change (React's
+  // "adjust state during render" pattern — avoids a setState-in-effect).
+  const [seenDefault, setSeenDefault] = useState(defaultStopId)
+  if (defaultStopId !== seenDefault) {
+    setSeenDefault(defaultStopId)
     setActiveStopId(defaultStopId)
-  }, [defaultStopId, campus])
+  }
 
   const activeStop =
     stops.find((stop) => stop.id === activeStopId) ?? stops[0] ?? null
+
+  function openStop(stopId) {
+    setActiveStopId(stopId)
+    setMode('immersive')
+  }
 
   if (stops.length === 0) {
     return (
@@ -39,116 +51,173 @@ export function CampusTour({ stops, campus }) {
         <div>
           <div className="mb-2 flex items-center gap-2">
             <Compass className="h-5 w-5 text-[#1a2b5a]" />
-            <h2 className="text-2xl font-bold text-[#1a2b5a]">360° Campus Tour</h2>
+            <h2 className="text-2xl font-bold text-[#1a2b5a]">Virtual Campus Tour</h2>
           </div>
           <p className="text-slate-600">
-            Explore {campusLabel} locations in 360°. Drag to look around, scroll to zoom.
+            {mode === 'map'
+              ? 'Tap a numbered pin on the campus map to explore that location.'
+              : 'Drag to look around, scroll to zoom. Switch to the map to pick another spot.'}
           </p>
         </div>
-        {activeStop && (
-          <Badge className="rounded-full border-0 bg-[#1a2b5a] px-3 py-1 text-white hover:bg-[#1a2b5a]">
-            <RotateCw className="mr-1 h-3 w-3" />
-            {activeStop.name}
-          </Badge>
-        )}
+
+        {/* Map / 360° mode toggle */}
+        <div className="inline-flex rounded-full border border-slate-200 bg-white p-1">
+          <button
+            type="button"
+            onClick={() => setMode('map')}
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+              mode === 'map' ? 'bg-[#1a2b5a] text-white' : 'text-slate-600 hover:text-[#1a2b5a]'
+            }`}
+          >
+            <MapIcon className="h-4 w-4" />
+            Map
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode('immersive')}
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+              mode === 'immersive' ? 'bg-[#1a2b5a] text-white' : 'text-slate-600 hover:text-[#1a2b5a]'
+            }`}
+          >
+            <RotateCw className="h-4 w-4" />
+            360° View
+          </button>
+        </div>
       </div>
 
-      <PanoramaViewer
-        panorama={activeStop?.panorama}
-        stopName={activeStop?.name}
-        className="mb-6 shadow-md"
-      />
+      {mode === 'map' ? (
+        <CampusMap
+          stops={stops}
+          activeStopId={activeStopId}
+          onSelectStop={openStop}
+          className="shadow-md"
+        />
+      ) : (
+        <>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() => setMode('map')}
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-[#1a2b5a]"
+            >
+              <MapIcon className="h-4 w-4" />
+              Back to map
+            </button>
+            {activeStop && (
+              <Badge className="rounded-full border-0 bg-[#1a2b5a] px-3 py-1 text-white hover:bg-[#1a2b5a]">
+                <RotateCw className="mr-1 h-3 w-3" />
+                {activeStop.name}
+              </Badge>
+            )}
+          </div>
 
-      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <nav aria-label="Tour stops" className="space-y-2">
-          <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
-            Tour Stops
-          </p>
-          {stops.map((stop, index) => {
-            const isActive = stop.id === activeStop?.id
-            const has360 = hasPanorama(stop)
+          <PanoramaViewer
+            panorama={activeStop?.panorama}
+            stopName={activeStop?.name}
+            className="mb-6 shadow-md"
+          />
 
-            return (
-              <button
-                key={stop.id}
-                type="button"
-                onClick={() => setActiveStopId(stop.id)}
-                className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors ${
-                  isActive
-                    ? 'border-[#1a2b5a] bg-[#1a2b5a] text-white'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                }`}
-              >
-                <span
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-[#1a2b5a] text-white'
-                  }`}
-                >
-                  {index + 1}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold">{stop.name}</span>
-                  <span
-                    className={`mt-0.5 block text-xs ${
-                      isActive ? 'text-blue-100' : 'text-slate-500'
+          <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+            <nav aria-label="Tour stops" className="space-y-2">
+              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+                Tour Stops
+              </p>
+              {stops.map((stop) => {
+                const isActive = stop.id === activeStop?.id
+                const has360 = hasPanorama(stop)
+
+                return (
+                  <button
+                    key={stop.id}
+                    type="button"
+                    onClick={() => setActiveStopId(stop.id)}
+                    className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors ${
+                      isActive
+                        ? 'border-[#1a2b5a] bg-[#1a2b5a] text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                     }`}
                   >
-                    {has360 ? '360° ready' : '360° pending'}
-                  </span>
-                </span>
-              </button>
-            )
-          })}
-        </nav>
+                    <span
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                        isActive ? 'bg-white/20 text-white' : 'bg-[#1a2b5a] text-white'
+                      }`}
+                    >
+                      {stop.pinNumber ?? '•'}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold">{stop.name}</span>
+                      <span
+                        className={`mt-0.5 block text-xs ${
+                          isActive ? 'text-blue-100' : 'text-slate-500'
+                        }`}
+                      >
+                        {has360 ? '360° ready' : '360° pending'}
+                      </span>
+                    </span>
+                  </button>
+                )
+              })}
+            </nav>
 
-        <div className="space-y-4">
-          {activeStop && (
-            <Card className="rounded-xl border-slate-200 p-5 shadow-sm">
-              <div className="mb-2 flex flex-wrap items-center gap-2">
-                <h3 className="text-lg font-semibold text-[#1a2b5a]">{activeStop.name}</h3>
-                <span className="inline-flex items-center gap-1 text-xs text-slate-500">
-                  <MapPin className="h-3 w-3" />
-                  {activeStop.duration}
-                </span>
-              </div>
-              <p className="text-sm leading-relaxed text-slate-600">
-                {activeStop.description}
-              </p>
-
-              {!hasPanorama(activeStop) && (
-                <div className="mt-4 rounded-lg bg-slate-50 p-4 text-xs text-slate-600">
-                  <p className="mb-2 font-semibold text-[#1a2b5a]">
-                    To add a 360° view for this stop:
+            <div className="space-y-4">
+              {activeStop && (
+                <Card className="rounded-xl border-slate-200 p-5 shadow-sm">
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
+                    <h3 className="text-lg font-semibold text-[#1a2b5a]">{activeStop.name}</h3>
+                    <span className="inline-flex items-center gap-1 text-xs text-slate-500">
+                      <MapPin className="h-3 w-3" />
+                      {activeStop.duration}
+                    </span>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {activeStop.description}
                   </p>
-                  <pre className="overflow-x-auto whitespace-pre-wrap rounded bg-white p-3 text-[11px] leading-relaxed">
+
+                  {activeStop.gallery?.length > 0 && (
+                    <div className="mt-4">
+                      <p className="mb-2 text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+                        Photos
+                      </p>
+                      <CampusGallery images={activeStop.gallery} />
+                    </div>
+                  )}
+
+                  {!hasPanorama(activeStop) && (
+                    <div className="mt-4 rounded-lg bg-slate-50 p-4 text-xs text-slate-600">
+                      <p className="mb-2 font-semibold text-[#1a2b5a]">
+                        To add a 360° view for this stop:
+                      </p>
+                      <pre className="overflow-x-auto whitespace-pre-wrap rounded bg-white p-3 text-[11px] leading-relaxed">
 {`panorama: {
   type: 'equirectangular',
   src: '/panoramas/${activeStop.id}.jpg',
   caption: '${activeStop.name}',
 }`}
-                  </pre>
-                </div>
+                      </pre>
+                    </div>
+                  )}
+                </Card>
               )}
-            </Card>
-          )}
 
-          <Card className="rounded-xl border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
-            <p className="font-semibold text-[#1a2b5a]">Supported panorama formats</p>
-            <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
-              <li>
-                <strong>equirectangular</strong> — JPG/PNG 360° photos in{' '}
-                <code className="rounded bg-white px-1">public/panoramas/</code>
-              </li>
-              <li>
-                <strong>iframe</strong> — Matterport, Kuula, or Street View embed URLs
-              </li>
-              <li>
-                <strong>video</strong> — 360° MP4 video files
-              </li>
-            </ul>
-          </Card>
-        </div>
-      </div>
+              <Card className="rounded-xl border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+                <p className="font-semibold text-[#1a2b5a]">Supported panorama formats</p>
+                <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
+                  <li>
+                    <strong>equirectangular</strong> — JPG/PNG 360° photos in{' '}
+                    <code className="rounded bg-white px-1">public/panoramas/</code>
+                  </li>
+                  <li>
+                    <strong>iframe</strong> — Matterport, Kuula, or Street View embed URLs
+                  </li>
+                  <li>
+                    <strong>video</strong> — 360° MP4 video files
+                  </li>
+                </ul>
+              </Card>
+            </div>
+          </div>
+        </>
+      )}
     </section>
   )
 }
