@@ -52,8 +52,13 @@ export function fetchPostById(postId) {
   return enrichPost(post, likesStore, commentsStore)
 }
 
-export function fetchCampusTourStops(campus) {
-  return CAMPUS_TOUR_STOPS.filter((stop) => stop.campus === campus)
+// eslint-disable-next-line no-unused-vars
+export function fetchCampusTourStops(_campus) {
+  // MIIT is a single physical campus, so the tour shows every stop regardless
+  // of the news-feed campus selector. Ordered by pin number to match the map.
+  return [...CAMPUS_TOUR_STOPS].sort(
+    (a, b) => (a.pinNumber ?? 0) - (b.pinNumber ?? 0),
+  )
 }
 
 export function togglePostLike(postId) {
