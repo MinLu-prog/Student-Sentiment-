@@ -55,6 +55,28 @@ export const authenticateToken = (
   }
 };
 
+export const optionalAuthenticateToken = (
+  request: Request,
+  _response: Response,
+  next: NextFunction
+): void => {
+  const authorization = request.get("authorization");
+
+  if (authorization?.startsWith("Bearer ")) {
+    const token = authorization.replace("Bearer ", "");
+    try {
+      request.user = jwt.verify(
+        token,
+        process.env.JWT_SECRET as string
+      ) as DecodedToken;
+    } catch {
+      request.user = undefined;
+    }
+  }
+
+  next();
+};
+
 export const requireAdmin = (
   request: Request,
   response: Response,

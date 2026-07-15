@@ -1,104 +1,84 @@
-import { POSTS, getStats as computeStats } from '@/data/posts'
-import {
-  CAMPUS_TOUR_STOPS,
-  COMMENTS,
-  LIKES,
-  computeSentiment,
-  getUserById,
-} from '@/data/mockDb'
+import { api } from '@/services/api'
+import { getCurrentUserId } from '@/services/auth'
 
-const CURRENT_USER_ID = 'user-1'
-
-function enrichComment(comment) {
-  const author = getUserById(comment.userId)
+export function getStats(posts) {
+  const totalComments = posts.reduce(
+    (sum, post) => sum + (post.commentCount ?? 0),
+    0,
+  )
+  const totalReads = posts.reduce(
+    (sum, post) => sum + (Number(post.reads) || 0),
+    0,
+  )
 
   return {
-    ...comment,
-    author: author
-      ? { id: author.id, name: author.name, role: author.role }
-      : { id: comment.userId, name: 'Unknown User', role: 'guest' },
+    stories: posts.length,
+    comments: totalComments,
+    reads:
+      totalReads >= 1000
+        ? `${Math.round(totalReads / 1000)}K`
+        : String(totalReads),
   }
 }
 
-function enrichPost(post, likes, comments) {
-  const postLikes = likes.filter((like) => like.postId === post.id)
-  const postComments = comments
-    .filter((comment) => comment.postId === post.id)
-    .map(enrichComment)
-    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+export async function fetchPosts({ campus } = {}) {
+  const query = campus ? `?campus=${encodeURIComponent(campus)}` : ''
+  return api.get(`/posts${query}`)
+}
 
-  return {
-    ...post,
-    likeCount: postLikes.length,
-    commentCount: postComments.length,
-    likes: postLikes,
-    comments: postComments,
-    sentiment: computeSentiment(postComments),
-    likedByCurrentUser: postLikes.some((like) => like.userId === CURRENT_USER_ID),
+export async function fetchPostById(postId) {
+  try {
+    return await api.get(`/posts/${postId}`)
+  } catch (error) {
+    if (error.status === 404) return null
+    throw error
   }
 }
 
-let likesStore = [...LIKES]
-let commentsStore = [...COMMENTS]
-
-export function fetchPosts({ campus } = {}) {
-  const filtered = campus ? POSTS.filter((post) => post.campus === campus) : POSTS
-  return filtered.map((post) => enrichPost(post, likesStore, commentsStore))
+export async function fetchCampusTourStops(campus) {
+  const query = campus ? `?campus=${encodeURIComponent(campus)}` : ''
+  return api.get(`/campus-tour${query}`)
 }
 
-export function fetchPostById(postId) {
-  const post = POSTS.find((item) => item.id === Number(postId))
-  if (!post) return null
-  return enrichPost(post, likesStore, commentsStore)
-}
+export async function togglePostLike(postId) {
+  const userId = getCurrentUserId()
+  if (!userId) {
+    throw new Error('You must be logged in to like a post.')
+  }
 
-// eslint-disable-next-line no-unused-vars
-export function fetchCampusTourStops(_campus) {
-  // MIIT is a single physical campus, so the tour shows every stop regardless
-  // of the news-feed campus selector. Ordered by pin number to match the map.
-  return [...CAMPUS_TOUR_STOPS].sort(
-    (a, b) => (a.pinNumber ?? 0) - (b.pinNumber ?? 0),
-  )
-}
+  const post = await fetchPostById(postId)
+  if (!post) {
+    throw new Error('Post not found.')
+  }
 
-export function togglePostLike(postId) {
-  const existing = likesStore.find(
-    (like) => like.postId === postId && like.userId === CURRENT_USER_ID,
-  )
+  if (post.likedByCurrentUser) {
+    const likes = await api.get('/likes')
+    const existing = likes.find(
+      (like) => like.postId === postId && like.userId === userId,
+    )
 
-  if (existing) {
-    likesStore = likesStore.filter((like) => like.id !== existing.id)
+    if (existing) {
+      await api.delete(`/likes/${existing.id}`)
+    }
   } else {
-    likesStore = [
-      ...likesStore,
-      {
-        id: `like-${Date.now()}`,
-        postId,
-        userId: CURRENT_USER_ID,
-        createdAt: new Date().toISOString(),
-      },
-    ]
+    await api.post('/likes', { postId, userId })
   }
 
   return fetchPostById(postId)
 }
 
-export function addComment(postId, content, sentiment = 'neutral') {
-  const comment = {
-    id: `comment-${Date.now()}`,
-    postId,
-    userId: CURRENT_USER_ID,
-    content,
-    sentiment,
-    createdAt: new Date().toISOString(),
+export async function addComment(postId, content, sentiment = 'neutral') {
+  const userId = getCurrentUserId()
+  if (!userId) {
+    throw new Error('You must be logged in to comment.')
   }
 
-  commentsStore = [...commentsStore, comment]
-  return enrichComment(comment)
-}
-
-export function getStats(posts) {
-  return computeStats(posts)
+  return api.post('/comments', {
+    postId,
+    userId,
+    content,
+    sentiment,
+  })
 }
 
 export const postsApi = {
