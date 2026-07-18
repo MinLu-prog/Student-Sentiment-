@@ -150,12 +150,123 @@ async function main() {
 
   await prisma.campusTourStop.createMany({
     data: [
-      { id: 'stop-1', campus: 'main',  name: 'Main Auditorium',     description: 'Central venue for lectures, ceremonies, and major campus events.',      duration: '15 min', panorama: { type: 'equirectangular', src: 'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg', caption: 'Main Auditorium — demo 360°', initialView: { yaw: 0, pitch: 0, zoom: 50 } } },
-      { id: 'stop-2', campus: 'main',  name: 'Innovation Lab',      description: 'Student research hub with robotics, AI, and prototyping facilities.',   duration: '20 min' },
-      { id: 'stop-3', campus: 'north', name: 'Green Energy Centre',  description: 'Solar research station and sustainability programme headquarters.',      duration: '15 min' },
-      { id: 'stop-4', campus: 'south', name: 'Sports Complex',       description: 'Basketball courts, gym, and home of the MIIT Eagles.',                  duration: '25 min' },
-      { id: 'stop-5', campus: 'east',  name: 'Engineering Workshop', description: 'Capstone projects and autonomous systems testing grounds.',              duration: '20 min' },
-      { id: 'stop-6', campus: 'west',  name: 'Wellness Centre',      description: 'Counselling, fitness classes, and mindfulness spaces.',                 duration: '15 min' },
+      {
+        id: 'stop-1', campus: 'main', pinNumber: 1, name: 'Main Building', type: 'academic',
+        description: 'The central academic block housing lecture theatres and faculty offices.',
+        duration: '15 min', mapX: 0.561, mapY: 0.6,
+        gallery: [
+          { src: '/campus/main.jpg', caption: 'Main Building — front entrance' },
+          { src: '/campus/main2.jpg', caption: 'Academic complex, full view' },
+          { src: '/campus/main4.jpg', caption: 'Covered drop-off and parking' },
+          { src: '/campus/topviewjpg.jpg', caption: 'Aerial view of the campus complex' },
+        ],
+        panorama: {
+          type: 'equirectangular', src: 'panoramas/mainBuilding.JPG',
+          caption: 'Main Building — demo 360°', initialView: { yaw: 0, pitch: 0, zoom: 50 },
+        },
+      },
+      {
+        id: 'stop-2', campus: 'front', pinNumber: 2, name: 'Car Parking', type: 'parking',
+        description: 'Visitor and staff car park by the front entrance of the campus.',
+        duration: '5 min', mapX: 0.845, mapY: 0.568,
+      },
+      {
+        id: 'stop-3', campus: 'main', pinNumber: 3, name: 'Main Auditorium', type: 'hall',
+        description: 'Central venue for lectures, ceremonies, and major campus events.',
+        duration: '15 min', mapX: 0.719, mapY: 0.702,
+        gallery: [
+          { src: '/campus/main3.jpg', caption: 'Ceremonial facade — gilded detailing' },
+          { src: '/campus/main5.jpg', caption: 'Auditorium and adjoining glass wing' },
+        ],
+        panorama: {
+          type: 'equirectangular', src: 'panoramas/auditorium.jpg',
+          caption: 'Main Auditorium — demo 360°', initialView: { yaw: 0, pitch: 0, zoom: 50 },
+        },
+      },
+      {
+        id: 'stop-4', campus: 'main', pinNumber: 4, name: 'Library', type: 'library',
+        description: 'Quiet study spaces, reference collections, and digital resources.',
+        duration: '15 min', mapX: 0.68, mapY: 0.723,
+        panorama: { type: 'equirectangular', src: '/panoramas/library.JPG' },
+      },
+      {
+        id: 'stop-5', campus: 'main', pinNumber: 5, name: 'Lecture Rooms', type: 'academic',
+        description: 'Classrooms and lecture halls used for scheduled coursework.',
+        duration: '15 min', mapX: 0.546, mapY: 0.695,
+      },
+      {
+        id: 'stop-6', campus: 'main', pinNumber: 6, name: 'Parking & Main Road', type: 'road',
+        description: 'Vehicle parking and the tree-lined main approach road.',
+        duration: '5 min', mapX: 0.779, mapY: 0.56,
+        panorama: {
+          type: 'equirectangular', src: '/panoramas/footballField.JPG',
+          caption: 'Main Auditorium — front entrance', initialView: { yaw: 0, pitch: 0, zoom: 50 },
+        },
+      },
+      {
+        id: 'stop-7', campus: 'back', pinNumber: 7, name: 'Cycle Parking', type: 'parking',
+        description: 'Bicycle and motorbike parking at the rear of the campus.',
+        duration: '5 min', mapX: 0.37, mapY: 0.641,
+      },
+      {
+        id: 'stop-8', campus: 'main', pinNumber: 8, name: 'Faculty Departments', type: 'academic',
+        description: 'Departmental offices for the CSE and ECE faculties.',
+        duration: '10 min', mapX: 0.454, mapY: 0.549,
+      },
+      {
+        id: 'stop-9', campus: 'main', pinNumber: 9, name: 'Lab Rooms', type: 'lab',
+        description: 'Specialised laboratories for electronics, networking, and research.',
+        duration: '15 min', mapX: 0.574, mapY: 0.533,
+      },
+      {
+        id: 'stop-10', campus: 'back', pinNumber: 10, name: 'Stadium', type: 'sports',
+        description: 'Outdoor sports ground and running track for athletics and events.',
+        duration: '10 min', mapX: 0.308, mapY: 0.586,
+        panorama: { type: 'equirectangular', src: '/panoramas/stadium.JPG' },
+      },
+      {
+        id: 'stop-11', campus: 'back', pinNumber: 11, name: 'Girl Hostel', type: 'hostel',
+        description: 'On-campus residence hall for female students.',
+        duration: '5 min', mapX: 0.252, mapY: 0.307,
+      },
+      {
+        id: 'stop-12', campus: 'right', pinNumber: 12, name: 'Boy Hostel', type: 'hostel',
+        description: 'On-campus residence hall for male students.',
+        duration: '5 min', mapX: 0.469, mapY: 0.873,
+      },
+      {
+        id: 'stop-13', campus: 'left', pinNumber: 13, name: 'Faculty Hostel 1', type: 'hostel',
+        description: 'Staff accommodation block.',
+        duration: '5 min', mapX: 0.15, mapY: 0.629,
+      },
+      {
+        id: 'stop-14', campus: 'back', pinNumber: 14, name: 'Faculty Hostel 2', type: 'hostel',
+        description: 'Additional staff accommodation block.',
+        duration: '5 min', mapX: 0.399, mapY: 0.119,
+      },
+      {
+        id: 'stop-15', campus: 'front-right', pinNumber: 15, name: 'Professor Hostel', type: 'hostel',
+        description: 'Senior faculty and professor residences.',
+        duration: '5 min', mapX: 0.757, mapY: 0.91,
+      },
+      {
+        id: 'stop-16', campus: 'front', pinNumber: 16, name: 'Main Entrance(Gate 1)', type: 'entrance',
+        description: 'Primary entrance gate for vehicles and pedestrians, facing the main road.',
+        duration: '5 min', mapX: 0.902, mapY: 0.291,
+        gallery: [{ src: '/campus/Entrance.jpg', caption: 'MIIT main entrance gate' }],
+        panorama: { type: 'equirectangular', src: '/panoramas/Gate1.JPG' },
+      },
+      {
+        id: 'stop-17', campus: 'front', pinNumber: 17, name: 'Entrance 2 (Gate 2)', type: 'entrance',
+        description: 'Secondary entrance gate providing alternative access to the campus.',
+        duration: '5 min', mapX: 0.89, mapY: 0.844,
+        panorama: { type: 'equirectangular', src: '/panoramas/Gate2.JPG' },
+      },
+      {
+        id: 'stop-18', campus: 'left', pinNumber: 18, name: 'Canteen', type: 'canteen',
+        description: 'Student dining hall serving meals, snacks, and drinks.',
+        duration: '10 min', mapX: 0.627, mapY: 0.256,
+      },
     ],
   })
   console.log('Campus tour stops seeded')

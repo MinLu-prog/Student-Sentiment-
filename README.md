@@ -1,6 +1,8 @@
 # Student Sentiment — MIIT Campus Activities
 
-A React frontend for **MIIT** campus activities, blog posts, comment sentiment analysis, and 360° campus tours. Built with Vite, Tailwind CSS, and shadcn-style UI components.
+A full-stack app for **MIIT** campus activities: a blog feed, comment sentiment analysis, an
+interactive 360° campus tour, real login/signup, and an admin dashboard. React + Vite frontend,
+Express + Prisma + PostgreSQL backend.
 
 **Repository:** [github.com/MinLu-prog/Student-Sentiment-](https://github.com/MinLu-prog/Student-Sentiment-)
 
@@ -12,61 +14,124 @@ A React frontend for **MIIT** campus activities, blog posts, comment sentiment a
 |-------------|---------|
 | [Node.js](https://nodejs.org/) | 18 or later (20+ recommended) |
 | npm | Comes with Node.js |
+| [PostgreSQL](https://www.postgresql.org/download/) | 14+ (running locally, or any reachable instance) |
 
 Check your versions:
 
 ```bash
 node -v
 npm -v
+psql --version
 ```
+
+This is a **two-server app** — the backend (API + database) and the frontend (Vite dev server)
+both need to be running at the same time, in two separate terminals. Skipping the backend setup
+below is the #1 cause of "database error" / blank data on a fresh clone.
 
 ---
 
-## Quick start
-
-### 1. Clone the repository
+## 1. Clone the repository
 
 ```bash
 git clone https://github.com/MinLu-prog/Student-Sentiment-.git
 cd Student-Sentiment-
 ```
 
-### 2. Install dependencies
+## 2. Set up the database
 
-All application code lives in the `frontend/` folder:
+Create an empty PostgreSQL database for the app (name it whatever you like — `student_sentiment`
+is just the example used below):
 
 ```bash
-cd frontend
+createdb student_sentiment
+```
+
+(No `createdb` command? Use `psql -U postgres -c "CREATE DATABASE student_sentiment;"`, or create
+it through a GUI like pgAdmin/TablePlus — any method that ends with an empty database works.)
+
+## 3. Set up the backend
+
+```bash
+cd backend
 npm install
 ```
 
-### 3. Start the development server
+Copy the environment template and fill in your own local values:
+
+```bash
+cp .env.example .env       # macOS/Linux
+copy .env.example .env     # Windows
+```
+
+Edit `.env`:
+- `DATABASE_URL` — point it at the database you just created (update the username/password/db
+  name to match your local Postgres setup).
+- `JWT_SECRET` — any long random string. Generate one with:
+  ```bash
+  node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+  ```
+
+**`.env` is gitignored on purpose — never commit it.** Every person running this project locally
+(or on a fresh machine) creates their own from `.env.example`; that's expected, not an error.
+
+Push the schema to your new database and seed it with starter data (sample posts, users, and all
+18 campus tour stops):
+
+```bash
+npx prisma db push
+npx prisma generate
+npx prisma db seed
+```
+
+Start the backend:
 
 ```bash
 npm run dev
 ```
 
-Open the URL shown in the terminal (usually **http://localhost:5173**).
+It listens on **http://localhost:5000** by default. Leave this terminal running.
 
-### 4. Build for production
+### Seeded accounts (for logging in)
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | `admin@miit.edu.mm` | `admin123` |
+| Student | `thiri@miit.edu.mm` | `password1` |
+
+(Five more student accounts are seeded too — see `backend/prisma/seed.ts`.) The admin account can
+reach the dashboard at `/admin` (create/edit/delete posts, manage users, manage tour stops). You
+can also sign up a brand-new account from the app itself.
+
+## 4. Set up the frontend
+
+In a **second terminal**:
 
 ```bash
-npm run build
+cd frontend
+npm install
+npm run dev
 ```
 
-Output is written to `frontend/dist/`.
-
-### 5. Preview the production build locally
-
-```bash
-npm run preview
-```
+Open the URL shown in the terminal (usually **http://localhost:5173**). It talks to the backend at
+`http://localhost:5000/api` by default — set `VITE_API_BASE_URL` in a `frontend/.env` file if your
+backend runs somewhere else.
 
 ---
 
 ## Available scripts
 
-Run these from the `frontend/` directory:
+**`backend/`**
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start the API server with hot reload (tsx watch) |
+| `npm start` | Start the API server (no watch, for production) |
+| `npx prisma db push` | Sync the database schema from `prisma/schema.prisma` |
+| `npx prisma generate` | Regenerate the Prisma client after a schema change |
+| `npx prisma db seed` | Re-run the seed script (`prisma/seed.ts`) |
+| `npx prisma studio` | Browse/edit the database in a GUI |
+
+**`frontend/`**
 
 | Command | Description |
 |---------|-------------|
@@ -81,58 +146,59 @@ Run these from the `frontend/` directory:
 
 ```
 Student-Sentiment-/
-├── frontend/
-│   ├── public/
-│   │   └── panoramas/          # Put 360° images here
+├── backend/
+│   ├── prisma/
+│   │   ├── schema.prisma       # Database models
+│   │   └── seed.ts             # Starter data (users, posts, tour stops)
 │   ├── src/
-│   │   ├── components/         # UI components
-│   │   │   ├── panorama/       # 360° viewer
-│   │   │   └── ui/             # shadcn-style primitives
-│   │   ├── config/
-│   │   │   └── panorama.js     # Panorama schema & docs
-│   │   ├── data/
-│   │   │   ├── mockDb.js       # Mock likes, comments, tour stops
-│   │   │   └── posts.js        # Blog post content
-│   │   ├── services/
-│   │   │   └── postsApi.js     # API layer (swap for real backend)
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-└── README.md
+│   │   ├── routes/             # Express route handlers (REST API)
+│   │   ├── lib/prisma.ts       # Prisma client setup
+│   │   └── utils/middleware.ts # Auth (JWT), logging, error handling
+│   ├── uploads/                # User-uploaded images (gitignored contents)
+│   ├── .env.example            # Copy to .env and fill in
+│   └── app.js / index.js
+└── frontend/
+    ├── public/
+    │   ├── campus/              # Real campus photos used across the app
+    │   └── panoramas/           # 360° images for the campus tour
+    ├── src/
+    │   ├── components/          # UI components (incl. ui/ shadcn-style primitives)
+    │   ├── pages/                # Routed pages (incl. pages/admin/)
+    │   ├── context/AuthContext.jsx
+    │   ├── services/postsApi.js # All API calls to the backend
+    │   └── App.jsx               # Route definitions
+    └── package.json
 ```
 
 ---
 
 ## Features
 
-- **Blog feed** — campus stories with categories and search
-- **Comment analysis** — sentiment snapshot (positive / neutral / negative)
-- **Campus areas** — filter content by Main, North, South, East, West campus
-- **360° campus tour** — drag-to-look-around panoramas per tour stop
-- **Engagement** — likes and comments with mock data ready for a backend
+- **Real auth** — login, signup, logout, guest browsing (guests can read everything but can't
+  like or comment)
+- **Admin dashboard** (`/admin`, admin accounts only) — create/edit/delete posts, manage users
+  and roles, manage campus tour stops, upload images directly from your device
+- **Blog feed** — campus stories with categories, search, and multi-photo carousels
+- **Comment analysis dashboard** (`/sentiment`) — sentiment breakdown by topic, trend over time,
+  most-discussed stories
+- **360° campus tour** (`/campus-tour`) — interactive map with numbered pins, drag-to-look-around
+  panoramas per stop
+- **Engagement** — real likes and comments, backed by PostgreSQL
 
 ---
 
 ## Adding 360° tour panoramas
 
 1. Add equirectangular JPG/PNG files to `frontend/public/panoramas/`.
-2. Edit tour stops in `frontend/src/data/mockDb.js` and add a `panorama` field:
+2. Add or edit a tour stop from the admin dashboard (`/admin/tour-stops`), or directly in
+   `backend/prisma/seed.ts` if you're adding to the seed data, with a `panorama` field:
 
 ```js
-{
-  id: 'stop-1',
-  campus: 'main',
-  name: 'Main Auditorium',
-  description: '...',
-  duration: '15 min',
-  panorama: {
-    type: 'equirectangular',
-    src: '/panoramas/main-auditorium.jpg',
-    caption: 'Main Auditorium entrance',
-    initialView: { yaw: 0, pitch: 0, zoom: 50 },
-  },
+panorama: {
+  type: 'equirectangular',
+  src: '/panoramas/main-auditorium.jpg',
+  caption: 'Main Auditorium entrance',
+  initialView: { yaw: 0, pitch: 0, zoom: 50 },
 }
 ```
 
@@ -148,52 +214,48 @@ See `frontend/src/config/panorama.js` for full schema notes.
 
 ---
 
-## Connecting a backend
-
-Mock data is separated from the UI. Replace functions in `frontend/src/services/postsApi.js` with real API calls:
-
-| Function | Purpose |
-|----------|---------|
-| `fetchPosts({ campus })` | List posts for a campus |
-| `fetchPostById(id)` | Single post with likes & comments |
-| `togglePostLike(postId)` | Like / unlike a post |
-| `addComment(postId, content, sentiment)` | Add a comment |
-| `fetchCampusTourStops(campus)` | Tour stops with optional `panorama` |
-
-Raw mock records live in:
-
-- `frontend/src/data/posts.js` — post content
-- `frontend/src/data/mockDb.js` — users, likes, comments, tour stops
-
-The UI expects enriched post objects with `likeCount`, `commentCount`, `comments`, `sentiment`, and `likedByCurrentUser` — see `enrichPost()` in `postsApi.js`.
-
----
-
 ## Tech stack
 
-- [React 19](https://react.dev/)
-- [Vite 8](https://vite.dev/)
-- [Tailwind CSS 4](https://tailwindcss.com/)
-- [Radix UI](https://www.radix-ui.com/) + shadcn-style components
-- [Lucide React](https://lucide.dev/) icons
-- [@photo-sphere-viewer/core](https://photo-sphere-viewer.js.org/) for 360° views
+**Frontend:** [React 19](https://react.dev/), [Vite 8](https://vite.dev/),
+[React Router 7](https://reactrouter.com/), [Tailwind CSS 4](https://tailwindcss.com/),
+[Radix UI](https://www.radix-ui.com/) + shadcn-style components, [Lucide React](https://lucide.dev/)
+icons, [@photo-sphere-viewer/core](https://photo-sphere-viewer.js.org/) for 360° views, Leaflet for
+the campus map.
+
+**Backend:** [Express 5](https://expressjs.com/), [Prisma 7](https://www.prisma.io/) +
+PostgreSQL, JWT auth (`jsonwebtoken` + `bcrypt`), Multer for image uploads.
 
 ---
 
 ## Troubleshooting
 
-**Port already in use**  
-Vite picks the next free port automatically (e.g. 5174). Check the terminal output for the correct URL.
+**"Can't reach database server" / Prisma connection errors**
+- Confirm PostgreSQL is actually running.
+- Confirm `backend/.env` exists (copy it from `.env.example` if not — it's gitignored, so a fresh
+  clone never has one) and `DATABASE_URL` matches your real username/password/database name.
+- Confirm you ran `npx prisma db push` against that database at least once.
 
-**`npm install` fails**  
-Delete `node_modules` and `package-lock.json`, then run `npm install` again.
+**Posts / campus tour / login show up empty or broken on a fresh clone**
+- You need to run `npx prisma db seed` after `db push` — an empty (but schema-correct) database
+  has no starter data.
 
-**360° image does not load**  
+**Frontend loads but shows "Unable to load posts" / falls back to placeholder content**
+- The backend isn't running, isn't reachable at `http://localhost:5000`, or crashed on startup —
+  check the backend terminal for errors first.
+
+**Port already in use**
+- Vite picks the next free port automatically (e.g. 5174) — check the terminal output.
+- The backend's port is set by `PORT` in `.env` (defaults to 5000) if 5000 is taken.
+
+**`npm install` fails**
+Delete `node_modules` and `package-lock.json` in the affected folder, then run `npm install` again.
+
+**360° image does not load**
 - Confirm the file exists under `frontend/public/panoramas/`.
 - Use a true equirectangular 360° image (2:1 aspect ratio).
 - Paths must start with `/panoramas/` (served from `public/`).
 
-**Blank page after build**  
+**Blank page after build**
 Run `npm run preview` from `frontend/` and check the browser console for errors.
 
 ---
