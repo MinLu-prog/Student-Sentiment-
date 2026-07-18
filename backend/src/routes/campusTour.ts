@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
+import { authenticateToken, requireAdmin } from "../utils/middleware";
 
 const CampusTourStopRouter = Router();
 
@@ -8,12 +9,19 @@ interface CreateCampusTourStopBody {
   name: string;
   description: string;
   duration: string;
+  pinNumber?: number;
+  type?: string;
+  mapX?: number;
+  mapY?: number;
+  gallery?: { src: string; caption?: string }[];
   panorama?: any;
 }
 
-// Create
+// Create — admin only
 CampusTourStopRouter.post(
   "/",
+  authenticateToken,
+  requireAdmin,
   async (
     req: Request<{}, {}, CreateCampusTourStopBody>,
     res: Response
@@ -24,6 +32,11 @@ CampusTourStopRouter.post(
         name,
         description,
         duration,
+        pinNumber,
+        type,
+        mapX,
+        mapY,
+        gallery,
         panorama,
       } = req.body;
 
@@ -39,6 +52,11 @@ CampusTourStopRouter.post(
           name,
           description,
           duration,
+          pinNumber,
+          type,
+          mapX,
+          mapY,
+          gallery,
           panorama,
         },
       });
@@ -94,9 +112,11 @@ CampusTourStopRouter.get(
   }
 );
 
-// Update
+// Update — admin only
 CampusTourStopRouter.put(
   "/:id",
+  authenticateToken,
+  requireAdmin,
   async (
     req: Request<{ id: string }, {}, Partial<CreateCampusTourStopBody>>,
     res: Response
@@ -118,9 +138,11 @@ CampusTourStopRouter.put(
   }
 );
 
-// Delete
+// Delete — admin only
 CampusTourStopRouter.delete(
   "/:id",
+  authenticateToken,
+  requireAdmin,
   async (req: Request, res: Response) => {
     try {
       await prisma.campusTourStop.delete({

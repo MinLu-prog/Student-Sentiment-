@@ -38,22 +38,24 @@ function pinIcon(stop, isActive) {
   })
 }
 
-/** Dev-only: click the map to capture a normalised { x, y } for pin placement. */
+/** Click the map to capture a normalised { x, y } for pin placement — used
+ *  both by the dev-only public pin tool and by the admin tour-stop form. */
 function CoordinatePicker({ enabled, onPick }) {
   useMapEvents({
     click(event) {
       if (!enabled) return
       const { x, y } = toNormalized(event.latlng.lat, event.latlng.lng)
       const snippet = `map: { x: ${x.toFixed(3)}, y: ${y.toFixed(3)} }`
-      onPick(snippet)
+      onPick(snippet, x, y)
       navigator.clipboard?.writeText(snippet).catch(() => {})
     },
   })
   return null
 }
 
-export function CampusMap({ stops = [], activeStopId, onSelectStop, className = '' }) {
+export function CampusMap({ stops = [], activeStopId, onSelectStop, onPickCoordinate, className = '' }) {
   const isDev = Boolean(import.meta.env?.DEV)
+  const pickerAvailable = isDev || Boolean(onPickCoordinate)
   const [picking, setPicking] = useState(false)
   const [lastPick, setLastPick] = useState(null)
 
@@ -137,10 +139,18 @@ export function CampusMap({ stops = [], activeStopId, onSelectStop, className = 
           )
         })}
 
-        {isDev && <CoordinatePicker enabled={picking} onPick={setLastPick} />}
+        {pickerAvailable && (
+          <CoordinatePicker
+            enabled={picking}
+            onPick={(snippet, x, y) => {
+              setLastPick(snippet)
+              onPickCoordinate?.(x, y)
+            }}
+          />
+        )}
       </MapContainer>
 
-      {isDev && (
+      {pickerAvailable && (
         <div className="pointer-events-none absolute right-3 top-3 z-[1100] flex flex-col items-end gap-2">
           <button
             type="button"

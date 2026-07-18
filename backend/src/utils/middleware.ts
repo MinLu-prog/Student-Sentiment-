@@ -55,6 +55,33 @@ export const authenticateToken = (
   }
 };
 
+export const optionalAuthenticateToken = (
+  request: Request,
+  response: Response,
+  next: NextFunction
+): void => {
+  const authorization = request.get("authorization");
+
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    next();
+    return;
+  }
+
+  const token = authorization.replace("Bearer ", "");
+
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    ) as DecodedToken;
+    request.user = decoded;
+  } catch {
+    // invalid/expired token on an optional route: proceed as guest
+  }
+
+  next();
+};
+
 export const requireAdmin = (
   request: Request,
   response: Response,

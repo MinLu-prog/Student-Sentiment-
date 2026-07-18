@@ -3,3 +3,7 @@ node_modules
 .env
 
 /generated/prisma
+
+# User-uploaded images — keep the directory, not its contents
+uploads/*
+!uploads/.gitkeep

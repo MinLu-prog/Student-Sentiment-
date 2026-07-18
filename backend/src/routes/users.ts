@@ -72,9 +72,56 @@ userRoute.post(
   }
 );
 
+// PUT /users/:id — admin only (update name/email/role)
+interface UpdateUserInput {
+  name?: string;
+  email?: string;
+  role?: "USER" | "ADMIN";
+}
+
+userRoute.put(
+  "/:id",
+  authenticateToken,
+  requireAdmin,
+  async (req: Request<{ id: string }, {}, UpdateUserInput>, res: Response) => {
+    try {
+      const { name, email, role } = req.body;
+
+      if (role && role !== "USER" && role !== "ADMIN") {
+        res.status(400).json({ error: "role must be USER or ADMIN" });
+        return;
+      }
+
+      if (req.user!.id === req.params.id && role && role !== "ADMIN") {
+        res.status(400).json({ error: "You cannot change your own admin role" });
+        return;
+      }
+
+      const user = await prisma.user.update({
+        where: { id: req.params.id },
+        data: { name, email, role },
+        select: { id: true, name: true, email: true, role: true },
+      });
+
+      res.json(user);
+    } catch (error: any) {
+      if (error.code === "P2002") {
+        res.status(400).json({ error: "email already in use" });
+        return;
+      }
+      res.status(500).json({ error: error.message });
+    }
+  }
+);
+
 // DELETE /users/:id — admin only
 userRoute.delete("/:id", authenticateToken, requireAdmin, async (req: Request, res: Response) => {
   try {
+    if (req.user!.id === req.params.id) {
+      res.status(400).json({ error: "You cannot delete your own account" });
+      return;
+    }
+
     await prisma.user.delete({ where: { id: req.params.id } });
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error: any) {

@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import {prisma} from '../lib/prisma';
+import { authenticateToken } from '../utils/middleware';
 
 const likeRouter = Router();
 
@@ -9,7 +10,6 @@ interface LikeParams {
 
 interface CreateLikeBody {
   postId: number;
-  userId: string;
 }
 
 likeRouter.get('/', async (req : Request, res: Response) => {
@@ -49,9 +49,10 @@ likeRouter.get(
   }
 )
 
-likeRouter.post('/', async (req: Request<{}, {}, CreateLikeBody>, res: Response) => {
+likeRouter.post('/', authenticateToken, async (req: Request<{}, {}, CreateLikeBody>, res: Response) => {
   try {
-    const { postId, userId }= req.body;
+    const { postId } = req.body;
+    const userId = req.user!.id;
     const like = await prisma.like.create({
       data: {
         postId,
@@ -60,13 +61,16 @@ likeRouter.post('/', async (req: Request<{}, {}, CreateLikeBody>, res: Response)
     })
     res.status(201).json(like);
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(409).json({ error: 'already liked' });
+    }
     console.log(error);
     res.status(500).json({error: 'Internal server error'});
   }
 })
 
-likeRouter.delete('/:id', async (req: Request, res: Response) => {
+likeRouter.delete('/:id', authenticateToken, async (req: Request, res: Response) => {
   try {
     const like = await prisma.like.findUnique({
       where: {
@@ -78,6 +82,10 @@ likeRouter.delete('/:id', async (req: Request, res: Response) => {
       return res.status(404).json({
         error: 'Like not found',
       });
+    }
+
+    if (like.userId !== req.user!.id && req.user!.role !== 'ADMIN') {
+      return res.status(403).json({ error: 'not allowed to delete this like' });
     }
 
     await prisma.like.delete({

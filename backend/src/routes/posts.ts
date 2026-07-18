@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
-import { authenticateToken, requireAdmin } from "../utils/middleware";
+import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../utils/middleware";
 
 const postsRouter = Router();
 
@@ -12,7 +12,7 @@ interface CreatePostBody {
   title: string;
   excerpt: string;
   body: string;
-  image: string;
+  images: string[];
   tags: string[];
 }
 
@@ -46,6 +46,9 @@ function enrichPost(
     likedByCurrentUser: currentUserId
       ? likes.some((l: any) => l.userId === currentUserId)
       : false,
+    myLikeId: currentUserId
+      ? likes.find((l: any) => l.userId === currentUserId)?.id ?? null
+      : null,
     comments: comments.map((c: any) => ({
       id: c.id,
       content: c.content,
@@ -66,11 +69,11 @@ const postInclude = {
     include: { user: { select: { id: true, name: true, role: true } } },
     orderBy: { createdAt: "desc" as const },
   },
-  likes: { select: { userId: true } },
+  likes: { select: { id: true, userId: true } },
 };
 
-// GET all posts — public
-postsRouter.get("/", async (req: Request, res: Response) => {
+// GET all posts — public (optional auth for likedByCurrentUser/myLikeId)
+postsRouter.get("/", optionalAuthenticateToken, async (req: Request, res: Response) => {
   try {
     const { campus } = req.query;
     const currentUserId = req.user?.id;
@@ -87,9 +90,10 @@ postsRouter.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// GET post by id — public
+// GET post by id — public (optional auth for likedByCurrentUser/myLikeId)
 postsRouter.get(
   "/:id",
+  optionalAuthenticateToken,
   async (req: Request<PostParams>, res: Response) => {
     try {
       const id = Number(req.params.id);
@@ -119,21 +123,45 @@ postsRouter.post(
   requireAdmin,
   async (req: Request<{}, {}, CreatePostBody>, res: Response) => {
     try {
-      const { featured, category, campus, date, title, excerpt, body, image, tags } =
+      const { featured, category, campus, date, title, excerpt, body, images, tags } =
         req.body;
 
       const post = await prisma.post.create({
-        data: { featured, category, campus, date, title, excerpt, body, image, tags },
+        data: { featured, category, campus, date, title, excerpt, body, images, tags },
       });
 
       res.status(201).json(post);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Failed to create post" });
     }
   }
 );
 
 
+
+// UPDATE post — admin only
+postsRouter.put(
+  "/:id",
+  authenticateToken,
+  requireAdmin,
+  async (req: Request<PostParams, {}, Partial<CreatePostBody>>, res: Response) => {
+    try {
+      const id = Number(req.params.id);
+      const { featured, category, campus, date, title, excerpt, body, images, tags } =
+        req.body;
+
+      const post = await prisma.post.update({
+        where: { id },
+        data: { featured, category, campus, date, title, excerpt, body, images, tags },
+      });
+
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update post" });
+    }
+  }
+);
 
 // DELETE post — admin only
 postsRouter.delete(

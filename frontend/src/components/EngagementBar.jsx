@@ -1,5 +1,7 @@
 import { Heart, MessageSquare } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/context/AuthContext'
 
 export function EngagementBar({
   post,
@@ -7,12 +9,15 @@ export function EngagementBar({
   commentsOpen,
   onToggleComments,
 }) {
+  const { isGuest } = useAuth()
+  const navigate = useNavigate()
+
   return (
     <div className="flex flex-wrap items-center gap-2 border-t border-slate-200 pt-5">
       <Button
         type="button"
         variant="ghost"
-        onClick={() => onToggleLike(post.id)}
+        onClick={() => (isGuest ? navigate('/login') : onToggleLike(post.id))}
         className={`h-auto rounded-full px-3 py-1.5 text-sm font-medium ${
           post.likedByCurrentUser
             ? 'bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600'

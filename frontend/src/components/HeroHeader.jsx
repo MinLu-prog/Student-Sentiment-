@@ -2,8 +2,6 @@ import { HeroContent } from '@/components/HeroContent'
 import { HeroTopbar } from '@/components/HeroTopbar'
 
 export function HeroHeader({
-  view,
-  onViewChange,
   search,
   onSearchChange,
   stats,
@@ -18,7 +16,7 @@ export function HeroHeader({
           "linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.84) 48%, rgba(26, 43, 90, 0.58) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.1) 0%, rgba(10, 18, 42, 0.72) 100%), url('/campus/main2.jpg')",
       }}
     >
-      <HeroTopbar view={view} onViewChange={onViewChange} />
+      <HeroTopbar />
       {showContent && (
         <HeroContent
           search={search}

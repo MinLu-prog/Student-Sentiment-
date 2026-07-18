@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
+import { authenticateToken } from "../utils/middleware";
 
 const CommentRouter = Router();
 //const prisma = new PrismaClient();
@@ -8,20 +9,21 @@ interface CreateCommentBody {
   content: string;
   sentiment: string;
   postId: number;
-  userId: string
 }
 
 CommentRouter.post(
   "/",
+  authenticateToken,
   async (
     req: Request<{},{},CreateCommentBody>,
     res: Response
   ) => {
     try {
-      const { content, sentiment, postId, userId } = req.body;
+      const { content, sentiment, postId } = req.body;
+      const userId = req.user!.id;
       const trimmedContent = content?.trim();
 
-      if ( !trimmedContent || !sentiment || !postId || !userId ) {
+      if ( !trimmedContent || !sentiment || !postId ) {
         return res.status(400).json({ error: "Missing required fields" });
       }
       const comment = await prisma.comment.create({
@@ -103,9 +105,22 @@ CommentRouter.get(
 
 CommentRouter.delete(
   "/:id",
+  authenticateToken,
   async (req: Request, res: Response) => {
     try {
-      const comment = await prisma.comment.delete({
+      const comment = await prisma.comment.findUnique({
+        where: { id: req.params.id },
+      });
+
+      if (!comment) {
+        return res.status(404).json({ message: "Comment not found" });
+      }
+
+      if (comment.userId !== req.user!.id && req.user!.role !== "ADMIN") {
+        return res.status(403).json({ error: "not allowed to delete this comment" });
+      }
+
+      await prisma.comment.delete({
         where: {
           id: req.params.id,
         },

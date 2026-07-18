@@ -31,7 +31,7 @@ model Post {
   title    String
   excerpt  String
   body     String
-  image    String
+  images   String[] @default([])
   tags     String[]
   reads    Int       @default(0)
 
@@ -71,5 +71,10 @@ model CampusTourStop {
   name        String
   description String
   duration    String
+  pinNumber   Int?
+  type        String?
+  mapX        Float?
+  mapY        Float?
+  gallery     Json?
   panorama    Json?
 }
