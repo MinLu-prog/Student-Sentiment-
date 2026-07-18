@@ -321,6 +321,7 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '10 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.308, y: 0.586 },
+    panorama: { type: 'equirectangular', src: '/panoramas/stadium.JPG' },
   },
   {
     id: 'stop-11',
@@ -387,9 +388,11 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '5 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.902, y: 0.291 },
+    panorama: { type: 'equirectangular', src: '/panoramas/Gate1.JPG' },
     gallery: [
       { src: '/campus/Entrance.jpg', caption: 'MIIT main entrance gate' },
     ],
+    
   },
   {
     id: 'stop-17',
@@ -401,6 +404,7 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '5 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.890, y: 0.844 },
+    panorama: { type: 'equirectangular', src: '/panoramas/Gate2.JPG' },
   },
   {
     id: 'stop-18',

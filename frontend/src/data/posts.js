@@ -109,8 +109,13 @@ export function getStats(posts) {
     0,
   )
   const totalReads = posts.reduce((sum, post) => {
-    const value = parseFloat(post.reads)
-    return sum + (post.reads.includes('K') ? value * 1000 : value)
+    if (typeof post.reads === 'number') {
+      return sum + post.reads
+    }
+
+    const reads = post.reads ?? '0'
+    const value = parseFloat(reads)
+    return sum + (reads.includes('K') ? value * 1000 : value)
   }, 0)
 
   return {
