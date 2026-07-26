@@ -398,6 +398,14 @@ async function main() {
   })
   console.log('Campus tour stops seeded')
 
+  // Post.id is autoincrement but the posts above are inserted with explicit ids,
+  // which does not advance the underlying sequence. Without this, the first
+  // prisma.post.create() would reuse id 1 and fail with P2002 on `id`.
+  await prisma.$executeRawUnsafe(
+    `SELECT setval(pg_get_serial_sequence('"Post"', 'id'), COALESCE((SELECT MAX(id) FROM "Post"), 0) + 1, false)`
+  )
+  console.log('Post id sequence realigned')
+
   console.log('Database seeding complete!')
 }
 
