@@ -16,6 +16,10 @@ interface CreatePostBody {
   tags: string[];
 }
 
+interface PostParams {
+  id: string;
+}
+
 function buildSentiment(comments: { sentiment: string }[]) {
   const total = comments.length;
   const counts = { positive: 0, neutral: 0, negative: 0 } as Record<string, number>;
@@ -90,7 +94,7 @@ postsRouter.get("/", optionalAuthenticateToken, async (req: Request, res: Respon
 postsRouter.get(
   "/:id",
   optionalAuthenticateToken,
-  async (req: Request, res: Response) => {
+  async (req: Request<PostParams>, res: Response) => {
     try {
       const id = Number(req.params.id);
       const currentUserId = req.user?.id;
@@ -141,7 +145,7 @@ postsRouter.put(
   "/:id",
   authenticateToken,
   requireAdmin,
-  async (req: Request<any, any, Partial<CreatePostBody>>, res: Response) => {
+  async (req: Request<PostParams, {}, Partial<CreatePostBody>>, res: Response) => {
     try {
       const id = Number(req.params.id);
       const { featured, category, campus, date, title, excerpt, body, images, tags } =
@@ -165,7 +169,7 @@ postsRouter.delete(
   "/:id",
   authenticateToken,
   requireAdmin,
-  async (req: Request, res: Response) => {
+  async (req: Request<PostParams>, res: Response) => {
     try {
       const id = Number(req.params.id);
 

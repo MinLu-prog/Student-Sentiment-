@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { FileText, GraduationCap, LogOut, MapPinned, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { getInitials } from '@/lib/utils'
 
 function navLinkClass({ isActive }) {

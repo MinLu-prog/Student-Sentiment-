@@ -12,6 +12,10 @@ interface CreateUserInput {
   role?: "USER" | "ADMIN";
 }
 
+interface UserParams {
+  id: string;
+}
+
 // GET /users — admin only
 userRoute.get("/", authenticateToken, requireAdmin, async (_req: Request, res: Response) => {
   const users = await prisma.user.findMany({
@@ -21,7 +25,7 @@ userRoute.get("/", authenticateToken, requireAdmin, async (_req: Request, res: R
 });
 
 // GET /users/:id — authenticated users
-userRoute.get("/:id", authenticateToken, async (req: Request, res: Response) => {
+userRoute.get("/:id", authenticateToken, async (req: Request<UserParams>, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.params.id },
@@ -115,7 +119,7 @@ userRoute.put(
 );
 
 // DELETE /users/:id — admin only
-userRoute.delete("/:id", authenticateToken, requireAdmin, async (req: Request, res: Response) => {
+userRoute.delete("/:id", authenticateToken, requireAdmin, async (req: Request<UserParams>, res: Response) => {
   try {
     if (req.user!.id === req.params.id) {
       res.status(400).json({ error: "You cannot delete your own account" });

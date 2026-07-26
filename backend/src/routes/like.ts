@@ -70,7 +70,7 @@ likeRouter.post('/', authenticateToken, async (req: Request<{}, {}, CreateLikeBo
   }
 })
 
-likeRouter.delete('/:id', authenticateToken, async (req: Request, res: Response) => {
+likeRouter.delete('/:id', authenticateToken, async (req: Request<LikeParams>, res: Response) => {
   try {
     const like = await prisma.like.findUnique({
       where: {

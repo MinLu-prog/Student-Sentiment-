@@ -3,7 +3,7 @@ import { Send } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { getInitials } from '@/lib/utils'
 import { SENTIMENT_COLORS } from '@/config/sentimentColors'
 

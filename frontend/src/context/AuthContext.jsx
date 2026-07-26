@@ -1,9 +1,8 @@
-import { createContext, useContext, useState } from 'react'
-import { loginRequest, signupRequest, setAuthToken } from '@/services/postsApi'
+import { useEffect, useState } from 'react'
+import { loginRequest, signupRequest, setAuthToken, setUnauthorizedHandler } from '@/services/postsApi'
+import { AuthContext } from './auth-context'
 
 const STORAGE_KEY = 'studentSentimentAuth'
-
-const AuthContext = createContext(null)
 
 function readStoredAuth() {
   try {
@@ -57,6 +56,17 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(STORAGE_KEY)
   }
 
+  // A 401 from a stale/invalid token (wrong JWT_SECRET, a reset database,
+  // an expired token, ...) clears the session the same way logout() does,
+  // so the UI falls back to guest state instead of silently failing forever.
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      setSession({ user: null, token: null })
+      setAuthToken(null)
+      localStorage.removeItem(STORAGE_KEY)
+    })
+  }, [])
+
   const value = {
     user,
     token,
@@ -67,12 +77,4 @@ export function AuthProvider({ children }) {
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
-  }
-  return context
 }

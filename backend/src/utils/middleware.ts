@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from "express";
+import type { ParamsDictionary } from "express-serve-static-core";
+import type { ParsedQs } from "qs";
 import jwt from "jsonwebtoken";
 import * as logger from "./logger";
 
@@ -29,8 +31,21 @@ export const requestLogger = (
   next();
 };
 
-export const authenticateToken = (
-  request: Request,
+// These are generic over the same params Express's own RequestHandler is
+// (P, ResBody, ReqBody, ReqQuery). Without this, a plain `Request`-typed
+// middleware placed before a route handler that uses a more specific
+// `Request<{ id: string }>` (or similar) breaks TypeScript's overload
+// resolution for router.get/post/put/delete — it can no longer unify the
+// handler chain against a single overload and reports confusing errors
+// (a "string | string[] is not assignable to string" on req.params, or a
+// "No overload matches this call" pointing at the error-handler overload).
+// Making these generic lets each route instantiate them with its own types.
+export const authenticateToken = <
+  P = ParamsDictionary,
+  ReqBody = any,
+  ReqQuery = ParsedQs
+>(
+  request: Request<P, any, ReqBody, ReqQuery>,
   response: Response,
   next: NextFunction
 ): void => {
@@ -55,8 +70,12 @@ export const authenticateToken = (
   }
 };
 
-export const optionalAuthenticateToken = (
-  request: Request,
+export const optionalAuthenticateToken = <
+  P = ParamsDictionary,
+  ReqBody = any,
+  ReqQuery = ParsedQs
+>(
+  request: Request<P, any, ReqBody, ReqQuery>,
   response: Response,
   next: NextFunction
 ): void => {
@@ -82,8 +101,12 @@ export const optionalAuthenticateToken = (
   next();
 };
 
-export const requireAdmin = (
-  request: Request,
+export const requireAdmin = <
+  P = ParamsDictionary,
+  ReqBody = any,
+  ReqQuery = ParsedQs
+>(
+  request: Request<P, any, ReqBody, ReqQuery>,
   response: Response,
   next: NextFunction
 ): void => {

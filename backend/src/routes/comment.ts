@@ -1,14 +1,18 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { authenticateToken } from "../utils/middleware";
+import { analyzeSentiment } from "../utils/sentiment";
 
 const CommentRouter = Router();
 //const prisma = new PrismaClient();
 
 interface CreateCommentBody {
   content: string;
-  sentiment: string;
   postId: number;
+}
+
+interface CommentParams {
+  id: string;
 }
 
 CommentRouter.post(
@@ -19,13 +23,18 @@ CommentRouter.post(
     res: Response
   ) => {
     try {
-      const { content, sentiment, postId } = req.body;
+      const { content, postId } = req.body;
       const userId = req.user!.id;
       const trimmedContent = content?.trim();
 
-      if ( !trimmedContent || !sentiment || !postId ) {
+      if ( !trimmedContent || !postId ) {
         return res.status(400).json({ error: "Missing required fields" });
       }
+
+      // Sentiment is computed here, not trusted from the client — VADER
+      // scores the actual comment text so the label can't be spoofed.
+      const sentiment = analyzeSentiment(trimmedContent);
+
       const comment = await prisma.comment.create({
         data: {
           content: trimmedContent,
@@ -81,7 +90,7 @@ CommentRouter.get(
 
 CommentRouter.get(
   "/:id",
-  async (req: Request, res: Response) => {
+  async (req: Request<CommentParams>, res: Response) => {
     try {
       const comment = await prisma.comment.findUnique({
         where: {
@@ -106,7 +115,7 @@ CommentRouter.get(
 CommentRouter.delete(
   "/:id",
   authenticateToken,
-  async (req: Request, res: Response) => {
+  async (req: Request<CommentParams>, res: Response) => {
     try {
       const comment = await prisma.comment.findUnique({
         where: { id: req.params.id },

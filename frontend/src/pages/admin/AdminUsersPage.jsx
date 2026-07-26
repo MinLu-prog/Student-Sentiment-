@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { createUserAdmin, deleteUser, fetchUsers, updateUser } from '@/services/postsApi'
 
 const LIGHT_INPUT = 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#1a2b5a]/20'

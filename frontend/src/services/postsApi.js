@@ -19,6 +19,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000
 const UPLOAD_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, '')
 
 let authToken = null
+let unauthorizedHandler = null
 
 export function setAuthToken(token) {
   authToken = token
@@ -26,6 +27,14 @@ export function setAuthToken(token) {
 
 export function getAuthToken() {
   return authToken
+}
+
+// AuthContext registers a handler here so a stale/invalid token (e.g. signed
+// with an old JWT_SECRET, or from a database that's since been reset) clears
+// the session automatically instead of every authenticated action silently
+// failing forever while the UI still looks logged in.
+export function setUnauthorizedHandler(handler) {
+  unauthorizedHandler = handler
 }
 
 function formatReadCount(reads) {
@@ -81,6 +90,14 @@ async function fetchJson(path, options) {
     } catch {
       // response body wasn't JSON — keep the generic message
     }
+
+    // Only a stale/invalid token on an authenticated request should log the
+    // user out — a 401 from the login endpoint itself (wrong password) has
+    // no session to clear and must not trigger this.
+    if (response.status === 401 && authToken) {
+      unauthorizedHandler?.()
+    }
+
     throw new Error(message)
   }
 
@@ -230,7 +247,7 @@ export async function togglePostLike(postId, { likedByCurrentUser, myLikeId } = 
   }
 }
 
-export async function addComment(postId, content, sentiment = 'neutral') {
+export async function addComment(postId, content) {
   const trimmedContent = content.trim()
 
   if (!trimmedContent) {
@@ -243,7 +260,6 @@ export async function addComment(postId, content, sentiment = 'neutral') {
       body: JSON.stringify({
         postId: Number(postId),
         content: trimmedContent,
-        sentiment,
       }),
     })
 
@@ -252,12 +268,14 @@ export async function addComment(postId, content, sentiment = 'neutral') {
     console.warn('Saving comment to mock data because backend comments failed.', error)
   }
 
+  // Offline/backend-down fallback only — real sentiment is computed
+  // server-side by VADER, which isn't available in this mock path.
   const comment = {
     id: `comment-${Date.now()}`,
     postId,
     userId: MOCK_FALLBACK_USER_ID,
     content: trimmedContent,
-    sentiment,
+    sentiment: 'neutral',
     createdAt: new Date().toISOString(),
   }
 

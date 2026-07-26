@@ -3,7 +3,7 @@ import { ArrowLeft, GraduationCap } from 'lucide-react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
 
 const MIN_PASSWORD_LENGTH = 8

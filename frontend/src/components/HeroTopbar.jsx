@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
 import { getInitials } from '@/lib/utils'
 

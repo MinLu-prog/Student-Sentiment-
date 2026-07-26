@@ -223,7 +223,8 @@ icons, [@photo-sphere-viewer/core](https://photo-sphere-viewer.js.org/) for 360Â
 the campus map.
 
 **Backend:** [Express 5](https://expressjs.com/), [Prisma 7](https://www.prisma.io/) +
-PostgreSQL, JWT auth (`jsonwebtoken` + `bcrypt`), Multer for image uploads.
+PostgreSQL, JWT auth (`jsonwebtoken` + `bcrypt`), Multer for image uploads, VADER
+(`vader-sentiment`) for comment sentiment analysis.
 
 ---
 

@@ -17,6 +17,10 @@ interface CreateCampusTourStopBody {
   panorama?: any;
 }
 
+interface CampusTourStopParams {
+  id: string;
+}
+
 // Create — admin only
 CampusTourStopRouter.post(
   "/",
@@ -91,7 +95,7 @@ CampusTourStopRouter.get(
 // Get By Id
 CampusTourStopRouter.get(
   "/:id",
-  async (req: Request, res: Response) => {
+  async (req: Request<CampusTourStopParams>, res: Response) => {
     try {
       const stop = await prisma.campusTourStop.findUnique({
         where: {
@@ -120,7 +124,7 @@ CampusTourStopRouter.put(
   authenticateToken,
   requireAdmin,
   async (
-    req: Request<{ id: string }, {}, Partial<CreateCampusTourStopBody>>,
+    req: Request<CampusTourStopParams, {}, Partial<CreateCampusTourStopBody>>,
     res: Response
   ) => {
     try {
@@ -145,7 +149,7 @@ CampusTourStopRouter.delete(
   "/:id",
   authenticateToken,
   requireAdmin,
-  async (req: Request, res: Response) => {
+  async (req: Request<CampusTourStopParams>, res: Response) => {
     try {
       await prisma.campusTourStop.delete({
         where: {

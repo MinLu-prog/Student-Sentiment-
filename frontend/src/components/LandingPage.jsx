@@ -1,7 +1,7 @@
 import { BookOpen, GraduationCap } from 'lucide-react'
 import { Link, Navigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/useAuth'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
 
 export function LandingPage() {
