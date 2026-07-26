@@ -196,10 +196,49 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '15 min',
     map: { x: 0.561, y: 0.6 },
     gallery: [
-      { src: '/campus/main.jpg', caption: 'Main Building — front entrance' },
-      { src: '/campus/main2.jpg', caption: 'Academic complex, full view' },
-      { src: '/campus/main4.jpg', caption: 'Covered drop-off and parking' },
-      { src: '/campus/topviewjpg.jpg', caption: 'Aerial view of the campus complex' },
+      { src: '/campus/MainBuilding/photo_1_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 1' },
+      { src: '/campus/MainBuilding/photo_2_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 2' },
+      { src: '/campus/MainBuilding/photo_3_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 3' },
+      { src: '/campus/MainBuilding/photo_4_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 4' },
+      { src: '/campus/MainBuilding/photo_5_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 5' },
+      { src: '/campus/MainBuilding/photo_6_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 6' },
+      { src: '/campus/MainBuilding/photo_7_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 7' },
+      { src: '/campus/MainBuilding/photo_8_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 8' },
+      { src: '/campus/MainBuilding/photo_9_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 9' },
+      { src: '/campus/MainBuilding/photo_10_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 10' },
+      { src: '/campus/MainBuilding/photo_11_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 11' },
+      { src: '/campus/MainBuilding/photo_12_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 12' },
+      { src: '/campus/MainBuilding/photo_13_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 13' },
+      { src: '/campus/MainBuilding/photo_14_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 14' },
+      { src: '/campus/MainBuilding/photo_15_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 15' },
+      { src: '/campus/MainBuilding/photo_16_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 16' },
+      { src: '/campus/MainBuilding/photo_17_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 17' },
+      { src: '/campus/MainBuilding/photo_18_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 18' },
+      { src: '/campus/MainBuilding/photo_19_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 19' },
+      { src: '/campus/MainBuilding/photo_20_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 20' },
+      { src: '/campus/MainBuilding/photo_21_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 21' },
+      { src: '/campus/MainBuilding/photo_22_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 22' },
+      { src: '/campus/MainBuilding/photo_23_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 23' },
+      { src: '/campus/MainBuilding/photo_24_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 24' },
+      { src: '/campus/MainBuilding/photo_25_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 25' },
+      { src: '/campus/MainBuilding/photo_26_2026-07-26_12-13-45.jpg', caption: 'Main Building — photo 26' },
+      { src: '/campus/MainBuilding/photo_1_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 27' },
+      { src: '/campus/MainBuilding/photo_4_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 28' },
+      { src: '/campus/MainBuilding/photo_5_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 29' },
+      { src: '/campus/MainBuilding/photo_6_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 30' },
+      { src: '/campus/MainBuilding/photo_7_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 31' },
+      { src: '/campus/MainBuilding/photo_10_2026-07-26_12-00-24.jpg', caption: 'Main Building — photo 32' },
+      { src: '/campus/MainBuilding/photo_15_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 33' },
+      { src: '/campus/MainBuilding/photo_16_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 34' },
+      { src: '/campus/MainBuilding/photo_52_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 35' },
+      { src: '/campus/MainBuilding/photo_64_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 36' },
+      { src: '/campus/MainBuilding/photo_66_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 37' },
+      { src: '/campus/MainBuilding/photo_75_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 38' },
+      { src: '/campus/MainBuilding/photo_76_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 39' },
+      { src: '/campus/MainBuilding/photo_77_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 40' },
+      { src: '/campus/MainBuilding/photo_86_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 41' },
+      { src: '/campus/MainBuilding/photo_88_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 42' },
+      { src: '/campus/MainBuilding/photo_89_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 43' },
     ],
     // Demo 360° — replace src with your MIIT photo: public/panoramas/main-auditorium.jpg
     panorama: {
@@ -218,6 +257,11 @@ export const CAMPUS_TOUR_STOPS = [
     description: 'Visitor and staff car park by the front entrance of the campus.',
     duration: '5 min',
     map: { x: 0.845, y: 0.568 },
+    gallery: [
+      { src: '/campus/CarParking/main.jpg', caption: 'Car Parking — photo 1' },
+      { src: '/campus/CarParking/main2.jpg', caption: 'Car Parking — photo 2' },
+      { src: '/campus/CarParking/main4.jpg', caption: 'Car Parking — photo 3' },
+    ],
   },
   {
     id: 'stop-3',
@@ -229,8 +273,7 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '15 min',
     map: { x: 0.719, y: 0.702 },
     gallery: [
-      { src: '/campus/main3.jpg', caption: 'Ceremonial facade — gilded detailing' },
-      { src: '/campus/main5.jpg', caption: 'Auditorium and adjoining glass wing' },
+      { src: '/campus/Auditorium/auditorium.jpg', caption: 'Main Auditorium — photo 1' },
     ],
     // Demo 360° — replace src with your MIIT photo: public/panoramas/main-auditorium.jpg
     panorama: {
@@ -260,6 +303,14 @@ export const CAMPUS_TOUR_STOPS = [
     description: 'Classrooms and lecture halls used for scheduled coursework.',
     duration: '15 min',
     map: { x: 0.546, y: 0.695 },
+    gallery: [
+      { src: '/campus/LectureRooms/lectureRooms3rdFloor.jpg', caption: 'Lecture Rooms — 3rd floor' },
+      { src: '/campus/LectureRooms/photo_1_2026-07-26_12-09-50.jpg', caption: 'Lecture Rooms — photo 2' },
+      { src: '/campus/LectureRooms/photo_2_2026-07-26_12-09-50.jpg', caption: 'Lecture Rooms — photo 3' },
+      { src: '/campus/LectureRooms/photo_3_2026-07-26_12-09-50.jpg', caption: 'Lecture Rooms — photo 4' },
+      { src: '/campus/LectureRooms/photo_6_2026-07-26_12-09-50.jpg', caption: 'Lecture Rooms — photo 5' },
+      { src: '/campus/LectureRooms/photo_3_2026-07-26_12-00-24.jpg', caption: 'Lecture Rooms — photo 6' },
+    ],
     // panorama: { type: 'equirectangular', src: '/panoramas/lecture-rooms.jpg' }
   },
   {
@@ -271,6 +322,20 @@ export const CAMPUS_TOUR_STOPS = [
     description: 'Vehicle parking and the tree-lined main approach road.',
     duration: '5 min',
     map: { x: 0.779, y: 0.56 },
+    gallery: [
+      { src: '/campus/ParkingMainRoad/photo_41_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 1' },
+      { src: '/campus/ParkingMainRoad/photo_42_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 2' },
+      { src: '/campus/ParkingMainRoad/photo_43_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 3' },
+      { src: '/campus/ParkingMainRoad/photo_44_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 4' },
+      { src: '/campus/ParkingMainRoad/photo_45_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 5' },
+      { src: '/campus/ParkingMainRoad/photo_46_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 6' },
+      { src: '/campus/ParkingMainRoad/photo_47_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 7' },
+      { src: '/campus/ParkingMainRoad/photo_48_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 8' },
+      { src: '/campus/ParkingMainRoad/photo_62_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 9' },
+      { src: '/campus/ParkingMainRoad/photo_63_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 10' },
+      { src: '/campus/ParkingMainRoad/photo_78_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 11' },
+      { src: '/campus/ParkingMainRoad/photo_79_2026-07-26_12-01-16.jpg', caption: 'Parking & Main Road — photo 12' },
+    ],
     panorama: {
       type: 'equirectangular',
       src: '/panoramas/footballField.JPG',
@@ -310,6 +375,9 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '15 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.574, y: 0.533 },
+    gallery: [
+      { src: '/campus/LabRooms/photo_90_2026-07-26_12-01-16.jpg', caption: 'Lab Rooms — photo 1' },
+    ],
   },
   {
     id: 'stop-10',
@@ -321,6 +389,24 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '10 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.308, y: 0.586 },
+    gallery: [
+      { src: '/campus/Stadium/photo_19_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 1' },
+      { src: '/campus/Stadium/photo_20_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 2' },
+      { src: '/campus/Stadium/photo_21_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 3' },
+      { src: '/campus/Stadium/photo_22_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 4' },
+      { src: '/campus/Stadium/photo_23_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 5' },
+      { src: '/campus/Stadium/photo_24_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 6' },
+      { src: '/campus/Stadium/photo_25_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 7' },
+      { src: '/campus/Stadium/photo_26_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 8' },
+      { src: '/campus/Stadium/photo_27_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 9' },
+      { src: '/campus/Stadium/photo_28_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 10' },
+      { src: '/campus/Stadium/photo_29_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 11' },
+      { src: '/campus/Stadium/photo_30_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 12' },
+      { src: '/campus/Stadium/photo_31_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 13' },
+      { src: '/campus/Stadium/photo_32_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 14' },
+      { src: '/campus/Stadium/photo_33_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 15' },
+      { src: '/campus/Stadium/photo_34_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 16' },
+    ],
     panorama: { type: 'equirectangular', src: '/panoramas/stadium.JPG' },
   },
   {
@@ -344,6 +430,10 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '5 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.469, y: 0.873 },
+    gallery: [
+      { src: '/campus/BoyHostel/photo_1_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 1' },
+      { src: '/campus/BoyHostel/photo_2_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 2' },
+    ],
   },
   {
     id: 'stop-13',
@@ -390,9 +480,9 @@ export const CAMPUS_TOUR_STOPS = [
     map: { x: 0.902, y: 0.291 },
     panorama: { type: 'equirectangular', src: '/panoramas/Gate1.JPG' },
     gallery: [
-      { src: '/campus/Entrance.jpg', caption: 'MIIT main entrance gate' },
+      { src: '/campus/Entrance%20Gate1/Entrance.jpg', caption: 'Main Entrance (Gate 1) — photo 1' },
     ],
-    
+
   },
   {
     id: 'stop-17',
@@ -404,6 +494,10 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '5 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.890, y: 0.844 },
+    gallery: [
+      { src: '/campus/Gate%202/main3.jpg', caption: 'Entrance 2 (Gate 2) — photo 1' },
+      { src: '/campus/Gate%202/main5.jpg', caption: 'Entrance 2 (Gate 2) — photo 2' },
+    ],
     panorama: { type: 'equirectangular', src: '/panoramas/Gate2.JPG' },
   },
   {
@@ -416,6 +510,34 @@ export const CAMPUS_TOUR_STOPS = [
     duration: '10 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.627, y: 0.256 },
+    gallery: [
+      { src: '/campus/Canteen/photo_35_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 1' },
+      { src: '/campus/Canteen/photo_36_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 2' },
+      { src: '/campus/Canteen/photo_37_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 3' },
+      { src: '/campus/Canteen/photo_38_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 4' },
+      { src: '/campus/Canteen/photo_39_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 5' },
+      { src: '/campus/Canteen/photo_40_2026-07-26_12-01-16.jpg', caption: 'Canteen — photo 6' },
+    ],
+  },
+  {
+    id: 'stop-19',
+    campus: 'back',
+    pinNumber: 19,
+    name: 'Football Field',
+    type: 'sports',
+    description: 'Outdoor football pitch used for matches, training, and inter-department tournaments.',
+    duration: '10 min',
+    map: { x: 0.595, y: 0.434 },
+    gallery: [
+      { src: '/campus/FootballField/photo_54_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 1' },
+      { src: '/campus/FootballField/photo_55_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 2' },
+      { src: '/campus/FootballField/photo_56_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 3' },
+      { src: '/campus/FootballField/photo_57_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 4' },
+      { src: '/campus/FootballField/photo_58_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 5' },
+      { src: '/campus/FootballField/photo_59_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 6' },
+      { src: '/campus/FootballField/photo_60_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 7' },
+      { src: '/campus/FootballField/photo_61_2026-07-26_12-01-16.jpg', caption: 'Football Field — photo 8' },
+    ],
   },
 ]
 

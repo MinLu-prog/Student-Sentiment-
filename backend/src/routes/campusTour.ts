@@ -75,7 +75,9 @@ CampusTourStopRouter.get(
   "/",
   async (_req: Request, res: Response) => {
     try {
-      const stops = await prisma.campusTourStop.findMany();
+      const stops = await prisma.campusTourStop.findMany({
+        orderBy: { pinNumber: "asc" },
+      });
 
       return res.status(200).json(stops);
     } catch (error: any) {

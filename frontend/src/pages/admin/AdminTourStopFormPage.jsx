@@ -352,7 +352,7 @@ export function AdminTourStopFormPage() {
 
         <details className="rounded-lg border border-slate-200 bg-slate-50 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-600">
-            Advanced: 360° panorama
+            Advanced View
           </summary>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <Select

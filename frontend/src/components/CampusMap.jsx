@@ -131,7 +131,7 @@ export function CampusMap({ stops = [], activeStopId, onSelectStop, onPickCoordi
                     fontWeight: 600,
                   }}
                 >
-                  {hasPanorama(stop) ? 'View 360°' : 'Open details'}
+                  {hasPanorama(stop) ? 'View Detail' : 'Open details'}
                 </button>
               </div>
             </Popup>

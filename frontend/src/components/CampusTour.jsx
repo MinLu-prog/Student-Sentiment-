@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Compass, Map as MapIcon, MapPin, RotateCw } from 'lucide-react'
+import { Clock, Compass, Image as ImageIcon, Map as MapIcon, MapPin, RotateCw } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PanoramaViewer } from '@/components/panorama/PanoramaViewer'
@@ -80,7 +80,7 @@ export function CampusTour({ stops, campus }) {
             }`}
           >
             <RotateCw className="h-4 w-4" />
-            360° View
+            {/* 360° View */} Detail View
           </button>
         </div>
       </div>
@@ -111,11 +111,11 @@ export function CampusTour({ stops, campus }) {
             )}
           </div>
 
-          <PanoramaViewer
+          {/* <PanoramaViewer
             panorama={activeStop?.panorama}
             stopName={activeStop?.name}
             className="mb-6 shadow-md"
-          />
+          /> */}
 
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
             <nav aria-label="Tour stops" className="space-y-2">
@@ -124,7 +124,8 @@ export function CampusTour({ stops, campus }) {
               </p>
               {stops.map((stop) => {
                 const isActive = stop.id === activeStop?.id
-                const has360 = hasPanorama(stop)
+                // 360° panorama feature disabled for the mid-sem seminar
+                // const has360 = hasPanorama(stop)
 
                 return (
                   <button
@@ -146,6 +147,7 @@ export function CampusTour({ stops, campus }) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-semibold">{stop.name}</span>
+                      {/* 360° status label disabled for the mid-sem seminar
                       <span
                         className={`mt-0.5 block text-xs ${
                           isActive ? 'text-blue-100' : 'text-slate-500'
@@ -153,6 +155,7 @@ export function CampusTour({ stops, campus }) {
                       >
                         {has360 ? '360° ready' : '360° pending'}
                       </span>
+                      */}
                     </span>
                   </button>
                 )
@@ -161,59 +164,61 @@ export function CampusTour({ stops, campus }) {
 
             <div className="space-y-4">
               {activeStop && (
-                <Card className="rounded-xl border-slate-200 p-5 shadow-sm">
-                  <div className="mb-2 flex flex-wrap items-center gap-2">
-                    <h3 className="text-lg font-semibold text-[#1a2b5a]">{activeStop.name}</h3>
-                    <span className="inline-flex items-center gap-1 text-xs text-slate-500">
-                      <MapPin className="h-3 w-3" />
-                      {activeStop.duration}
-                    </span>
+                <Card className="overflow-hidden rounded-2xl border-slate-200 p-0 shadow-sm">
+                  {/* Header band — Tour Stop Name */}
+                  <div className="bg-gradient-to-r from-[#1a2b5a] to-[#2a3f7a] px-6 py-5 text-white">
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
+                        {activeStop.pinNumber ?? '•'}
+                      </span>
+                      <h3 className="text-xl font-bold leading-tight">{activeStop.name}</h3>
+                    </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-blue-100">
+                      {activeStop.type && (
+                        <span className="inline-flex items-center gap-1 capitalize">
+                          <MapPin className="h-3.5 w-3.5" />
+                          {activeStop.type}
+                        </span>
+                      )}
+                      {activeStop.duration && (
+                        <span className="inline-flex items-center gap-1">
+                          <Clock className="h-3.5 w-3.5" />
+                          {activeStop.duration}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {activeStop.description}
-                  </p>
 
-                  {activeStop.gallery?.length > 0 && (
-                    <div className="mt-4">
-                      <p className="mb-2 text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
-                        Photos
-                      </p>
-                      <CampusGallery images={activeStop.gallery} />
-                    </div>
-                  )}
+                  <div className="px-6 py-5">
+                    {/* Caption */}
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {activeStop.description}
+                    </p>
 
-                  {!hasPanorama(activeStop) && (
-                    <div className="mt-4 rounded-lg bg-slate-50 p-4 text-xs text-slate-600">
-                      <p className="mb-2 font-semibold text-[#1a2b5a]">
-                        To add a 360° view for this stop:
-                      </p>
-                      <pre className="overflow-x-auto whitespace-pre-wrap rounded bg-white p-3 text-[11px] leading-relaxed">
-{`panorama: {
-  type: 'equirectangular',
-  src: '/panoramas/${activeStop.id}.jpg',
-  caption: '${activeStop.name}',
-}`}
-                      </pre>
-                    </div>
-                  )}
+                    {/* Respective images gallery */}
+                    {activeStop.gallery?.length > 0 ? (
+                      <div className="mt-6">
+                        <div className="mb-3 flex items-center justify-between">
+                          <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+                            <ImageIcon className="h-3.5 w-3.5" />
+                            Photo Gallery
+                          </p>
+                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500">
+                            {activeStop.gallery.length}{' '}
+                            {activeStop.gallery.length === 1 ? 'photo' : 'photos'}
+                          </span>
+                        </div>
+                        <CampusGallery images={activeStop.gallery} />
+                      </div>
+                    ) : (
+                      <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-sm text-slate-400">
+                        <ImageIcon className="h-4 w-4" />
+                        Photos for this stop are coming soon.
+                      </div>
+                    )}
+                  </div>
                 </Card>
               )}
-
-              <Card className="rounded-xl border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
-                <p className="font-semibold text-[#1a2b5a]">Supported panorama formats</p>
-                <ul className="mt-2 list-inside list-disc space-y-1 text-xs">
-                  <li>
-                    <strong>equirectangular</strong> — JPG/PNG 360° photos in{' '}
-                    <code className="rounded bg-white px-1">public/panoramas/</code>
-                  </li>
-                  <li>
-                    <strong>iframe</strong> — Matterport, Kuula, or Street View embed URLs
-                  </li>
-                  <li>
-                    <strong>video</strong> — 360° MP4 video files
-                  </li>
-                </ul>
-              </Card>
             </div>
           </div>
         </>
