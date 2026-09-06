@@ -240,11 +240,10 @@ export const CAMPUS_TOUR_STOPS = [
       { src: '/campus/MainBuilding/photo_88_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 42' },
       { src: '/campus/MainBuilding/photo_89_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 43' },
     ],
-    // Demo 360° — replace src with your MIIT photo: public/panoramas/main-auditorium.jpg
     panorama: {
       type: 'equirectangular',
-      src: 'panoramas/mainBuilding.JPG',
-      caption: 'Main Building — demo 360°',
+      src: '/panoramas/mainBuilding.JPG',
+      caption: 'Main Building — 360° view',
       initialView: { yaw: 0, pitch: 0, zoom: 50 },
     },
   },
@@ -269,19 +268,22 @@ export const CAMPUS_TOUR_STOPS = [
     pinNumber: 3,
     name: 'Main Auditorium',
     type: 'hall',
-    description: 'Central venue for lectures, ceremonies, and major campus events.',
+    description: 'Central venue for ceremonies, and major campus events.',
     duration: '15 min',
     map: { x: 0.719, y: 0.702 },
     gallery: [
       { src: '/campus/Auditorium/auditorium.jpg', caption: 'Main Auditorium — photo 1' },
     ],
-    // Demo 360° — replace src with your MIIT photo: public/panoramas/main-auditorium.jpg
-    panorama: {
-      type: 'equirectangular',
-      src: 'panoramas/auditorium.jpg',
-      caption: 'Main Auditorium — demo 360°',
-      initialView: { yaw: 0, pitch: 0, zoom: 50 },
-    },
+    // Gallery-only stop. The 360° view is disabled because
+    // public/panoramas/auditorium.jpg is a plain 720x480 photo, not a 2:1
+    // equirectangular panorama — feeding it to the sphere renders it warped.
+    // Re-enable once a real 360° shot of the auditorium is available.
+    // panorama: {
+    //   type: 'equirectangular',
+    //   src: '/panoramas/auditorium.jpg',
+    //   caption: 'Main Auditorium — 360° view',
+    //   initialView: { yaw: 0, pitch: 0, zoom: 50 },
+    // },
   },
   {
     id: 'stop-4',
@@ -289,7 +291,7 @@ export const CAMPUS_TOUR_STOPS = [
     pinNumber: 4,
     name: 'Library',
     type: 'library',
-    description: 'Quiet study spaces, reference collections, and digital resources.',
+    description: 'Quiet study spaces, reference collections, and resources.',
     duration: '15 min',
     map: { x: 0.68, y: 0.723 },
     panorama: { type: 'equirectangular', src: '/panoramas/library.JPG' },
@@ -385,7 +387,7 @@ export const CAMPUS_TOUR_STOPS = [
     pinNumber: 10,
     name: 'Stadium',
     type: 'sports',
-    description: 'Outdoor sports ground and running track for athletics and events.',
+    description: 'Indoor sports ground for athletics and events.',
     duration: '10 min',
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.308, y: 0.586 },
@@ -431,8 +433,8 @@ export const CAMPUS_TOUR_STOPS = [
     // TODO: place with the Pin tool — approximate position
     map: { x: 0.469, y: 0.873 },
     gallery: [
-      { src: '/campus/BoyHostel/photo_1_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 1' },
-      { src: '/campus/BoyHostel/photo_2_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 2' },
+      { src: '/campus/BoyHostel/photo_1_2026-09-06_23-18-05.jpg', caption: 'Boy Hostel — photo 1' },
+      { src: '/campus/BoyHostel/photo_2_2026-09-06_23-18-05.jpg', caption: 'Boy Hostel — photo 2' },
     ],
   },
   {

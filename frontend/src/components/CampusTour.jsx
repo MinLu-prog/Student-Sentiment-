@@ -5,13 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import { PanoramaViewer } from '@/components/panorama/PanoramaViewer'
 import { CampusMap } from '@/components/CampusMap'
 import { CampusGallery } from '@/components/CampusGallery'
-import { CAMPUS_AREAS } from '@/data/posts'
 import { hasPanorama } from '@/config/panorama'
 
-export function CampusTour({ stops, campus }) {
-  const campusLabel =
-    CAMPUS_AREAS.find((area) => area.value === campus)?.label ?? 'Main Campus'
-
+export function CampusTour({ stops }) {
   const defaultStopId = useMemo(() => {
     const withPanorama = stops.find((stop) => hasPanorama(stop))
     return withPanorama?.id ?? stops[0]?.id ?? null
@@ -40,7 +36,7 @@ export function CampusTour({ stops, campus }) {
     return (
       <section className="mx-auto max-w-5xl text-left">
         <h2 className="text-2xl font-bold text-[#1a2b5a]">Campus Tour</h2>
-        <p className="mt-2 text-slate-600">No tour stops available for {campusLabel}.</p>
+        <p className="mt-2 text-slate-600">No tour stops available yet.</p>
       </section>
     )
   }
@@ -80,7 +76,7 @@ export function CampusTour({ stops, campus }) {
             }`}
           >
             <RotateCw className="h-4 w-4" />
-            {/* 360° View */} Detail View
+            360° View
           </button>
         </div>
       </div>
@@ -111,11 +107,15 @@ export function CampusTour({ stops, campus }) {
             )}
           </div>
 
-          {/* <PanoramaViewer
-            panorama={activeStop?.panorama}
-            stopName={activeStop?.name}
-            className="mb-6 shadow-md"
-          /> */}
+          {/* Only stops that actually have a 360° photo get the sphere; the
+              rest fall through to the photo gallery below. */}
+          {hasPanorama(activeStop) && (
+            <PanoramaViewer
+              panorama={activeStop.panorama}
+              stopName={activeStop.name}
+              className="mb-6 shadow-md"
+            />
+          )}
 
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
             <nav aria-label="Tour stops" className="space-y-2">
@@ -124,8 +124,7 @@ export function CampusTour({ stops, campus }) {
               </p>
               {stops.map((stop) => {
                 const isActive = stop.id === activeStop?.id
-                // 360° panorama feature disabled for the mid-sem seminar
-                // const has360 = hasPanorama(stop)
+                const has360 = hasPanorama(stop)
 
                 return (
                   <button
@@ -147,15 +146,13 @@ export function CampusTour({ stops, campus }) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-semibold">{stop.name}</span>
-                      {/* 360° status label disabled for the mid-sem seminar
                       <span
                         className={`mt-0.5 block text-xs ${
                           isActive ? 'text-blue-100' : 'text-slate-500'
                         }`}
                       >
-                        {has360 ? '360° ready' : '360° pending'}
+                        {has360 ? '360° ready' : 'Photo gallery'}
                       </span>
-                      */}
                     </span>
                   </button>
                 )

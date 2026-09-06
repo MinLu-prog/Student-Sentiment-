@@ -208,10 +208,9 @@ export function AdminTourStopFormPage() {
 
           <div>
             <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-              Campus area
+              Area
             </label>
             <Input
-              required
               placeholder="e.g. main, front, back"
               value={form.campus}
               onChange={(event) => updateField('campus', event.target.value)}
@@ -352,7 +351,7 @@ export function AdminTourStopFormPage() {
 
         <details className="rounded-lg border border-slate-200 bg-slate-50 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-600">
-            Advanced View
+            Advanced: 360° panorama
           </summary>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <Select

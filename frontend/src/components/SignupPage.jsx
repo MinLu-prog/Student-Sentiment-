@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/context/useAuth'
+import { HERO_IMAGE } from '@/config/heroMedia'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
 
 const MIN_PASSWORD_LENGTH = 8
@@ -47,7 +48,7 @@ export function SignupPage() {
       className="flex min-h-svh flex-col bg-[#1a2b5a] bg-cover bg-center text-white"
       style={{
         backgroundImage:
-          "linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.84) 48%, rgba(26, 43, 90, 0.58) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.1) 0%, rgba(10, 18, 42, 0.72) 100%), url('/campus/main2.jpg')",
+          `linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.84) 48%, rgba(26, 43, 90, 0.58) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.1) 0%, rgba(10, 18, 42, 0.72) 100%), url('${HERO_IMAGE}')`,
       }}
     >
       <header className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8">

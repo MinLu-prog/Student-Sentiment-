@@ -40,6 +40,20 @@ export function hasPanorama(stop) {
   return Boolean(stop?.panorama?.src)
 }
 
+/**
+ * Normalises a panorama `src` to something that resolves the same way from any
+ * route. A bare `panoramas/foo.jpg` would otherwise be looked up relative to
+ * the current URL (fine on `/campus-tour`, 404 on `/admin/tour-stops/x/edit`),
+ * so local paths are pinned to the site root. Absolute URLs pass through.
+ */
+export function resolvePanoramaSrc(src) {
+  if (!src) return undefined
+  if (/^(https?:)?\/\//i.test(src) || src.startsWith('data:') || src.startsWith('blob:')) {
+    return src
+  }
+  return src.startsWith('/') ? src : `/${src}`
+}
+
 export function getPanoramaCaption(stop) {
   return stop?.panorama?.caption ?? stop?.name ?? 'Campus location'
 }

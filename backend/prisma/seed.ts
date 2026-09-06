@@ -44,7 +44,7 @@ async function main() {
         id: 2,
         featured: false,
         category: 'Campus News',
-        campus: 'north',
+        campus: 'main',
         date: 'May 22, 2025',
         title: 'MIIT Launches New Sustainability Initiative',
         excerpt: 'The university announces a comprehensive plan to achieve carbon neutrality by 2035, including solar installations and green building upgrades.',
@@ -70,7 +70,7 @@ async function main() {
         id: 4,
         featured: false,
         category: 'Sports',
-        campus: 'south',
+        campus: 'main',
         date: 'May 14, 2025',
         title: 'MIIT Eagles Clinch Conference Championship',
         excerpt: "The men's basketball team secured their first conference title in over a decade with a thrilling overtime victory.",
@@ -83,7 +83,7 @@ async function main() {
         id: 5,
         featured: false,
         category: 'Engineering',
-        campus: 'east',
+        campus: 'main',
         date: 'May 10, 2025',
         title: 'Engineering Students Build Autonomous Delivery Robot',
         excerpt: 'A team of seniors developed a campus navigation robot that could streamline mail and package delivery across MIIT.',
@@ -96,7 +96,7 @@ async function main() {
         id: 6,
         featured: false,
         category: 'Student Life',
-        campus: 'west',
+        campus: 'main',
         date: 'May 5, 2025',
         title: 'New Student Wellness Center Opens Its Doors',
         excerpt: 'The state-of-the-art facility offers counselling, fitness classes, and mindfulness spaces for the entire MIIT community.',
@@ -206,8 +206,8 @@ async function main() {
           { src: '/campus/MainBuilding/photo_89_2026-07-26_12-01-16.jpg', caption: 'Main Building — photo 43' },
         ],
         panorama: {
-          type: 'equirectangular', src: 'panoramas/mainBuilding.JPG',
-          caption: 'Main Building — demo', initialView: { yaw: 0, pitch: 0, zoom: 50 },
+          type: 'equirectangular', src: '/panoramas/mainBuilding.JPG',
+          caption: 'Main Building — 360° view', initialView: { yaw: 0, pitch: 0, zoom: 50 },
         },
       },
       {
@@ -222,19 +222,23 @@ async function main() {
       },
       {
         id: 'stop-3', campus: 'main', pinNumber: 3, name: 'Main Auditorium', type: 'hall',
-        description: 'Central venue for lectures, ceremonies, and major campus events.',
+        description: 'Central venue for ceremonies, and major campus events.',
         duration: '15 min', mapX: 0.719, mapY: 0.702,
         gallery: [
           { src: '/campus/Auditorium/auditorium.jpg', caption: 'Main Auditorium — photo 1' },
         ],
-        panorama: {
-          type: 'equirectangular', src: 'panoramas/auditorium.jpg',
-          caption: 'Main Auditorium — demo 360°', initialView: { yaw: 0, pitch: 0, zoom: 50 },
-        },
+        // Gallery-only stop. The 360° view is disabled because
+        // public/panoramas/auditorium.jpg is a plain 720x480 photo, not a 2:1
+        // equirectangular panorama — feeding it to the sphere renders it warped.
+        // Re-enable once a real 360° shot of the auditorium is available.
+        // panorama: {
+        //   type: 'equirectangular', src: '/panoramas/auditorium.jpg',
+        //   caption: 'Main Auditorium — 360° view', initialView: { yaw: 0, pitch: 0, zoom: 50 },
+        // },
       },
       {
         id: 'stop-4', campus: 'main', pinNumber: 4, name: 'Library', type: 'library',
-        description: 'Quiet study spaces, reference collections, and digital resources.',
+        description: 'Quiet study spaces, reference collections, and resources.',
         duration: '15 min', mapX: 0.68, mapY: 0.723,
         panorama: { type: 'equirectangular', src: '/panoramas/library.JPG' },
       },
@@ -295,7 +299,7 @@ async function main() {
       },
       {
         id: 'stop-10', campus: 'back', pinNumber: 10, name: 'Stadium', type: 'sports',
-        description: 'Outdoor sports ground and running track for athletics and events.',
+        description: 'Indoor sports ground for athletics and events.',
         duration: '10 min', mapX: 0.308, mapY: 0.586,
         gallery: [
           { src: '/campus/Stadium/photo_19_2026-07-26_12-01-16.jpg', caption: 'Stadium — photo 1' },
@@ -327,8 +331,8 @@ async function main() {
         description: 'On-campus residence hall for male students.',
         duration: '5 min', mapX: 0.469, mapY: 0.873,
         gallery: [
-          { src: '/campus/BoyHostel/photo_1_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 1' },
-          { src: '/campus/BoyHostel/photo_2_2026-07-26_12-06-06.jpg', caption: 'Boy Hostel — photo 2' },
+          { src: '/campus/BoyHostel/photo_1_2026-09-06_23-18-05.jpg', caption: 'Boy Hostel — photo 1' },
+          { src: '/campus/BoyHostel/photo_2_2026-09-06_23-18-05.jpg', caption: 'Boy Hostel — photo 2' },
         ],
       },
       {

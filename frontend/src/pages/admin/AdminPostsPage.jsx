@@ -61,12 +61,11 @@ export function AdminPostsPage() {
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-          <table className="w-full min-w-[720px] text-left text-sm">
+          <table className="w-full min-w-[640px] text-left text-sm">
             <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Campus</th>
                 <th className="px-4 py-3">Date</th>
                 <th className="px-4 py-3">Featured</th>
                 <th className="px-4 py-3">Reads</th>
@@ -80,7 +79,6 @@ export function AdminPostsPage() {
                     {post.title}
                   </td>
                   <td className="px-4 py-3 text-slate-600">{post.category}</td>
-                  <td className="px-4 py-3 text-slate-600">{post.campus}</td>
                   <td className="px-4 py-3 text-slate-600">{post.date}</td>
                   <td className="px-4 py-3">
                     {post.featured && (

@@ -4,8 +4,12 @@ import { authenticateToken, requireAdmin } from "../utils/middleware";
 
 const CampusTourStopRouter = Router();
 
+// Positional area of a stop within the single MIIT campus (front / back /
+// left / right / main …) — not a separate campus. Optional on write.
+const DEFAULT_AREA = "main";
+
 interface CreateCampusTourStopBody {
-  campus: string;
+  campus?: string;
   name: string;
   description: string;
   duration: string;
@@ -44,7 +48,7 @@ CampusTourStopRouter.post(
         panorama,
       } = req.body;
 
-      if (!campus || !name || !description || !duration) {
+      if (!name || !description || !duration) {
         return res.status(400).json({
           message: "Missing required fields",
         });
@@ -52,7 +56,7 @@ CampusTourStopRouter.post(
 
       const stop = await prisma.campusTourStop.create({
         data: {
-          campus,
+          campus: campus?.trim() || DEFAULT_AREA,
           name,
           description,
           duration,

@@ -1,4 +1,5 @@
 import { MessageSquareText } from 'lucide-react'
+import { SENTIMENT_HERO_IMAGE } from '@/config/heroMedia'
 import { SENTIMENT_COLORS, SENTIMENT_ORDER } from '@/config/sentimentColors'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
 
@@ -16,7 +17,7 @@ export function SentimentHero({ overall, storyCount }) {
       className="overflow-hidden rounded-2xl bg-[#1a2b5a] bg-cover bg-center text-white shadow-sm"
       style={{
         backgroundImage:
-          "linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.88) 55%, rgba(26, 43, 90, 0.74) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.15) 0%, rgba(10, 18, 42, 0.85) 100%), url('/campus/topviewjpg.jpg')",
+          `linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.88) 55%, rgba(26, 43, 90, 0.74) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.15) 0%, rgba(10, 18, 42, 0.85) 100%), url('${SENTIMENT_HERO_IMAGE}')`,
       }}
     >
       <div className="px-6 py-10 sm:px-10 sm:py-14">

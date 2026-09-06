@@ -23,7 +23,7 @@ export function PanoramaLoading() {
   return (
     <div className="flex aspect-[16/9] w-full items-center justify-center rounded-xl bg-slate-900 text-sm text-slate-300">
       <ImageIcon className="mr-2 h-4 w-4 animate-pulse" />
-      Loading Detail view…
+      Loading 360° view…
     </div>
   )
 }

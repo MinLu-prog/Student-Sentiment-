@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { ImageUploadButton } from '@/components/ImageUploadButton'
-import { CATEGORIES, CAMPUS_AREAS } from '@/data/posts'
+import { CATEGORIES } from '@/data/posts'
 import { createPost, fetchPostById, updatePost } from '@/services/postsApi'
 
 const LIGHT_INPUT = 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus-visible:ring-[#1a2b5a]/20'
@@ -22,7 +22,6 @@ const EMPTY_FORM = {
   excerpt: '',
   body: '',
   category: CATEGORIES[1] ?? '',
-  campus: CAMPUS_AREAS[0]?.value ?? '',
   date: '',
   featured: false,
   tags: '',
@@ -52,7 +51,6 @@ export function AdminPostFormPage() {
           excerpt: post.excerpt ?? '',
           body: post.body ?? '',
           category: post.category ?? EMPTY_FORM.category,
-          campus: post.campus ?? EMPTY_FORM.campus,
           date: post.date ?? '',
           featured: Boolean(post.featured),
           tags: (post.tags ?? []).join(', '),
@@ -83,7 +81,6 @@ export function AdminPostFormPage() {
       excerpt: form.excerpt.trim(),
       body: form.body.trim(),
       category: form.category,
-      campus: form.campus,
       date: form.date.trim(),
       featured: form.featured,
       tags: form.tags.split(',').map((tag) => tag.trim()).filter(Boolean),
@@ -157,42 +154,22 @@ export function AdminPostFormPage() {
           />
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-              Category
-            </label>
-            <Select value={form.category} onValueChange={(value) => updateField('category', value)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CATEGORIES.filter((category) => category !== 'All').map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
-              Campus
-            </label>
-            <Select value={form.campus} onValueChange={(value) => updateField('campus', value)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CAMPUS_AREAS.map((area) => (
-                  <SelectItem key={area.value} value={area.value}>
-                    {area.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+            Category
+          </label>
+          <Select value={form.category} onValueChange={(value) => updateField('category', value)}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {CATEGORIES.filter((category) => category !== 'All').map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div>

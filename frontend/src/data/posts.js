@@ -8,14 +8,6 @@ export const CATEGORIES = [
   'Campus News',
 ]
 
-export const CAMPUS_AREAS = [
-  { value: 'main', label: 'Main Campus' },
-  { value: 'north', label: 'North Campus' },
-  { value: 'south', label: 'South Campus' },
-  { value: 'east', label: 'East Campus' },
-  { value: 'west', label: 'West Campus' },
-]
-
 export const POSTS = [
   {
     id: 1,
@@ -35,7 +27,7 @@ export const POSTS = [
     id: 2,
     featured: false,
     category: 'Campus News',
-    campus: 'north',
+    campus: 'main',
     date: 'May 22, 2025',
     title: 'MIIT Launches New Sustainability Initiative',
     excerpt:
@@ -63,7 +55,7 @@ export const POSTS = [
     id: 4,
     featured: false,
     category: 'Sports',
-    campus: 'south',
+    campus: 'main',
     date: 'May 14, 2025',
     title: 'MIIT Eagles Clinch Conference Championship',
     excerpt:
@@ -77,7 +69,7 @@ export const POSTS = [
     id: 5,
     featured: false,
     category: 'Engineering',
-    campus: 'east',
+    campus: 'main',
     date: 'May 10, 2025',
     title: 'Engineering Students Build Autonomous Delivery Robot',
     excerpt:
@@ -91,7 +83,7 @@ export const POSTS = [
     id: 6,
     featured: false,
     category: 'Student Life',
-    campus: 'west',
+    campus: 'main',
     date: 'May 5, 2025',
     title: 'New Student Wellness Center Opens Its Doors',
     excerpt:

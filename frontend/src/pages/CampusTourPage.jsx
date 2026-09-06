@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { CampusTour } from '@/components/CampusTour'
 
 export function CampusTourPage() {
-  const { tourStops, campus, isLoadingTourStops, tourStopsError } = useOutletContext()
+  const { tourStops, isLoadingTourStops, tourStopsError } = useOutletContext()
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -26,7 +26,7 @@ export function CampusTourPage() {
           {tourStopsError}
         </div>
       ) : (
-        <CampusTour stops={tourStops} campus={campus} />
+        <CampusTour stops={tourStops} />
       )}
     </div>
   )

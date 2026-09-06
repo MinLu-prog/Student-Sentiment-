@@ -66,7 +66,7 @@ export function AdminTourStopsPage() {
                 <th className="px-4 py-3">Pin #</th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Type</th>
-                <th className="px-4 py-3">Campus</th>
+                <th className="px-4 py-3">Area</th>
                 <th className="px-4 py-3">Duration</th>
                 <th className="px-4 py-3 text-right">Actions</th>
               </tr>

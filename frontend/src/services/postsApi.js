@@ -145,9 +145,8 @@ function enrichPost(post, likes, comments, currentUserId = null) {
 let likesStore = [...LIKES]
 let commentsStore = [...COMMENTS]
 
-function fetchMockPosts({ campus } = {}) {
-  const filtered = campus ? POSTS.filter((post) => post.campus === campus) : POSTS
-  return filtered.map((post) => enrichPost(post, likesStore, commentsStore, MOCK_FALLBACK_USER_ID))
+function fetchMockPosts() {
+  return POSTS.map((post) => enrichPost(post, likesStore, commentsStore, MOCK_FALLBACK_USER_ID))
 }
 
 function fetchMockPostById(postId, currentUserId = MOCK_FALLBACK_USER_ID) {
@@ -156,14 +155,13 @@ function fetchMockPostById(postId, currentUserId = MOCK_FALLBACK_USER_ID) {
   return enrichPost(post, likesStore, commentsStore, currentUserId)
 }
 
-export async function fetchPosts({ campus } = {}) {
+export async function fetchPosts() {
   try {
-    const query = campus ? `?campus=${encodeURIComponent(campus)}` : ''
-    const posts = await fetchJson(`/posts${query}`)
+    const posts = await fetchJson('/posts')
     return posts.map(normalizePost)
   } catch (error) {
     console.warn('Using mock posts because backend posts could not be loaded.', error)
-    return fetchMockPosts({ campus })
+    return fetchMockPosts()
   }
 }
 
@@ -197,8 +195,7 @@ export async function fetchTourStops() {
   return sortByPinNumber(stops.map(normalizeTourStop))
 }
 
-// eslint-disable-next-line no-unused-vars
-export async function fetchCampusTourStops(_campus) {
+export async function fetchCampusTourStops() {
   try {
     return await fetchTourStops()
   } catch (error) {

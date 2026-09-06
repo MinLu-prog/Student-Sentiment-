@@ -4,10 +4,14 @@ import { authenticateToken, requireAdmin, optionalAuthenticateToken } from "../u
 
 const postsRouter = Router();
 
+// MIIT is a single campus. The `campus` column stays on the table (dropping it
+// would force every teammate through a migration) but is no longer a real
+// dimension: writes pin it to this value and reads never filter on it.
+const DEFAULT_CAMPUS = "main";
+
 interface CreatePostBody {
   featured?: boolean;
   category: string;
-  campus: string;
   date: string;
   title: string;
   excerpt: string;
@@ -75,11 +79,12 @@ const postInclude = {
 // GET all posts — public (optional auth for likedByCurrentUser/myLikeId)
 postsRouter.get("/", optionalAuthenticateToken, async (req: Request, res: Response) => {
   try {
-    const { campus } = req.query;
     const currentUserId = req.user?.id;
 
+    // MIIT is a single campus, so every post is returned. The `campus` column
+    // is retained (defaulted to DEFAULT_CAMPUS on write) only to avoid a
+    // migration; nothing filters on it.
     const posts = await prisma.post.findMany({
-      where: campus ? { campus: String(campus) } : undefined,
       include: postInclude,
       orderBy: { id: "desc" },
     });
@@ -123,11 +128,21 @@ postsRouter.post(
   requireAdmin,
   async (req: Request<{}, {}, CreatePostBody>, res: Response) => {
     try {
-      const { featured, category, campus, date, title, excerpt, body, images, tags } =
+      const { featured, category, date, title, excerpt, body, images, tags } =
         req.body;
 
       const post = await prisma.post.create({
-        data: { featured, category, campus, date, title, excerpt, body, images, tags },
+        data: {
+          featured,
+          category,
+          campus: DEFAULT_CAMPUS,
+          date,
+          title,
+          excerpt,
+          body,
+          images,
+          tags,
+        },
       });
 
       res.status(201).json(post);
@@ -148,12 +163,13 @@ postsRouter.put(
   async (req: Request<PostParams, {}, Partial<CreatePostBody>>, res: Response) => {
     try {
       const id = Number(req.params.id);
-      const { featured, category, campus, date, title, excerpt, body, images, tags } =
+      const { featured, category, date, title, excerpt, body, images, tags } =
         req.body;
 
+      // `campus` is deliberately not updatable — see DEFAULT_CAMPUS above.
       const post = await prisma.post.update({
         where: { id },
-        data: { featured, category, campus, date, title, excerpt, body, images, tags },
+        data: { featured, category, date, title, excerpt, body, images, tags },
       });
 
       res.json(post);

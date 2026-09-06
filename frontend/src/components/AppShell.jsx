@@ -5,13 +5,12 @@ import { CategoryFilter } from '@/components/CategoryFilter'
 import { fetchCampusTourStops, fetchPosts, getStats } from '@/services/postsApi'
 
 export function AppShell() {
-  const campus = 'main'
   const location = useLocation()
   const navigate = useNavigate()
   const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
   const [refreshKey, setRefreshKey] = useState(0)
-  const [campusPosts, setCampusPosts] = useState([])
+  const [posts, setPosts] = useState([])
   const [isLoadingPosts, setIsLoadingPosts] = useState(true)
   const [postsError, setPostsError] = useState('')
   const hasLoadedPostsRef = useRef(false)
@@ -24,14 +23,14 @@ export function AppShell() {
       setPostsError('')
 
       try {
-        const posts = await fetchPosts({ campus })
+        const loaded = await fetchPosts()
         if (isCurrent) {
-          setCampusPosts(posts)
+          setPosts(loaded)
         }
       } catch {
         if (isCurrent) {
           setPostsError('Unable to load posts right now. Please try again.')
-          setCampusPosts([])
+          setPosts([])
         }
       } finally {
         if (isCurrent) {
@@ -46,7 +45,7 @@ export function AppShell() {
     return () => {
       isCurrent = false
     }
-  }, [campus, refreshKey])
+  }, [refreshKey])
 
   const [tourStops, setTourStops] = useState([])
   const [isLoadingTourStops, setIsLoadingTourStops] = useState(true)
@@ -60,7 +59,7 @@ export function AppShell() {
       setTourStopsError('')
 
       try {
-        const stops = await fetchCampusTourStops(campus)
+        const stops = await fetchCampusTourStops()
         if (isCurrent) {
           setTourStops(stops)
         }
@@ -81,12 +80,12 @@ export function AppShell() {
     return () => {
       isCurrent = false
     }
-  }, [campus])
+  }, [])
 
   const filteredPosts = useMemo(() => {
     const query = search.trim().toLowerCase()
 
-    return campusPosts.filter((post) => {
+    return posts.filter((post) => {
       const matchesCategory = category === 'All' || post.category === category
       const matchesSearch =
         !query ||
@@ -96,9 +95,9 @@ export function AppShell() {
 
       return matchesCategory && matchesSearch
     })
-  }, [campusPosts, category, search])
+  }, [posts, category, search])
 
-  const stats = getStats(campusPosts)
+  const stats = getStats(posts)
   const featuredPost = filteredPosts.find((post) => post.featured) ?? filteredPosts[0]
   const remainingPosts = filteredPosts.filter((post) => post.id !== featuredPost?.id)
 
@@ -122,7 +121,6 @@ export function AppShell() {
         search={search}
         onSearchChange={handleSearchChange}
         stats={stats}
-        campus={campus}
         showContent={showHeroContent}
       />
 
@@ -133,10 +131,9 @@ export function AppShell() {
       <main className="bg-[#f8f9fa] px-5 py-8 sm:px-8">
         <Outlet
           context={{
-            campus,
             category,
             search,
-            campusPosts,
+            posts,
             filteredPosts,
             featuredPost,
             remainingPosts,
