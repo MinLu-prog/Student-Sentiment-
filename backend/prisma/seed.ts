@@ -254,6 +254,7 @@ async function main() {
           { src: '/campus/LectureRooms/photo_6_2026-07-26_12-09-50.jpg', caption: 'Lecture Rooms — photo 5' },
           { src: '/campus/LectureRooms/photo_3_2026-07-26_12-00-24.jpg', caption: 'Lecture Rooms — photo 6' },
         ],
+        panorama: { type: 'equirectangular', src: '/panoramas/classRoom.JPG' },
       },
       {
         id: 'stop-6', campus: 'main', pinNumber: 6, name: 'Parking & Main Road', type: 'road',

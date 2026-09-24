@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Send } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { ScrollPane } from '@/components/ScrollPane'
 import { useAuth } from '@/context/useAuth'
 import { getInitials } from '@/lib/utils'
 import { SENTIMENT_COLORS } from '@/config/sentimentColors'
+
+const VISIBLE_COMMENTS = 5
 
 function formatCommentDate(isoDate) {
   return new Date(isoDate).toLocaleDateString('en-US', {
@@ -21,6 +24,12 @@ export function CommentsList({ comments, onAddComment, isSubmitting }) {
   const navigate = useNavigate()
   const [content, setContent] = useState('')
   const [error, setError] = useState('')
+
+  // Newest first for display; the data layer keeps its oldest-first order.
+  const sortedComments = useMemo(
+    () => [...comments].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+    [comments],
+  )
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -47,6 +56,7 @@ export function CommentsList({ comments, onAddComment, isSubmitting }) {
         <h2 className="text-lg font-bold text-[#1a2b5a]">Discussion</h2>
         <p className="mt-1 text-sm text-slate-500">
           {comments.length} comment{comments.length !== 1 ? 's' : ''}
+          {comments.length > 1 && ' · Newest first'}
         </p>
       </div>
 
@@ -107,30 +117,44 @@ export function CommentsList({ comments, onAddComment, isSubmitting }) {
         </Card>
       ) : null}
 
-      {comments.map((comment) => (
-        <Card key={comment.id} className="rounded-xl border-slate-200 p-4 text-left shadow-sm">
-          <div className="flex gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-[#1a2b5a]">
-              {getInitials(comment.author?.name)}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="mb-1 flex flex-wrap items-center gap-2">
-                <p className="text-sm font-semibold text-[#1a2b5a]">
-                  {comment.author?.name ?? 'Unknown User'}
-                </p>
-                <span className="text-xs text-slate-400">
-                  {formatCommentDate(comment.createdAt)}
-                </span>
-                <span
-                  aria-label={`Sentiment: ${comment.sentiment}`}
-                  className={`h-2 w-2 rounded-full ${SENTIMENT_COLORS[comment.sentiment]?.dot ?? SENTIMENT_COLORS.neutral.dot}`}
-                />
+      {/* Newest VISIBLE_COMMENTS show at once; older ones scroll inside the
+          list. Keyed by count so a newly posted comment (which lands at the
+          top) resets the list to the top, where it is visible. */}
+      <ScrollPane
+        key={comments.length}
+        visibleCount={VISIBLE_COMMENTS}
+        fadeClassName="from-[#f8f9fa]"
+        className="space-y-3 pb-1 pr-1"
+      >
+        {sortedComments.map((comment) => (
+          <Card
+            key={comment.id}
+            data-scroll-item
+            className="rounded-xl border-slate-200 p-4 text-left shadow-sm"
+          >
+            <div className="flex gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-[#1a2b5a]">
+                {getInitials(comment.author?.name)}
               </div>
-              <p className="text-sm leading-relaxed text-slate-700">{comment.content}</p>
+              <div className="min-w-0 flex-1">
+                <div className="mb-1 flex flex-wrap items-center gap-2">
+                  <p className="text-sm font-semibold text-[#1a2b5a]">
+                    {comment.author?.name ?? 'Unknown User'}
+                  </p>
+                  <span className="text-xs text-slate-400">
+                    {formatCommentDate(comment.createdAt)}
+                  </span>
+                  <span
+                    aria-label={`Sentiment: ${comment.sentiment}`}
+                    className={`h-2 w-2 rounded-full ${SENTIMENT_COLORS[comment.sentiment]?.dot ?? SENTIMENT_COLORS.neutral.dot}`}
+                  />
+                </div>
+                <p className="text-sm leading-relaxed text-slate-700">{comment.content}</p>
+              </div>
             </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        ))}
+      </ScrollPane>
     </section>
   )
 }
