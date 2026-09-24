@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ScrollPane } from '@/components/ScrollPane'
+
+const VISIBLE_PHOTOS = 9
 
 /**
  * Photo gallery for a campus tour stop: a responsive thumbnail grid that
@@ -28,23 +31,27 @@ export function CampusGallery({ images = [], className = '' }) {
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {images.map((img, index) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => setOpenIndex(index)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-slate-200"
-          >
-            <img
-              src={img.src}
-              alt={img.caption ?? ''}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          </button>
-        ))}
-      </div>
+      {/* First VISIBLE_PHOTOS show at once; the rest scroll inside the grid. */}
+      <ScrollPane visibleCount={VISIBLE_PHOTOS} className="pr-1">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {images.map((img, index) => (
+            <button
+              key={img.src}
+              type="button"
+              data-scroll-item
+              onClick={() => setOpenIndex(index)}
+              className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-slate-200"
+            >
+              <img
+                src={img.src}
+                alt={img.caption ?? ''}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </button>
+          ))}
+        </div>
+      </ScrollPane>
 
       {isOpen && (
         <div

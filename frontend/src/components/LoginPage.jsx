@@ -3,6 +3,7 @@ import { ArrowLeft, GraduationCap } from 'lucide-react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { SiteFooter } from '@/components/SiteFooter'
 import { useAuth } from '@/context/useAuth'
 import { HERO_IMAGE } from '@/config/heroMedia'
 import { UNIVERSITY_NAME } from '@/data/mockDb'
@@ -42,7 +43,7 @@ export function LoginPage() {
           `linear-gradient(90deg, rgba(26, 43, 90, 0.96) 0%, rgba(26, 43, 90, 0.84) 48%, rgba(26, 43, 90, 0.58) 100%), linear-gradient(180deg, rgba(10, 18, 42, 0.1) 0%, rgba(10, 18, 42, 0.72) 100%), url('${HERO_IMAGE}')`,
       }}
     >
-      <header className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8">
+      <header className="sticky top-0 z-[1500] flex items-center justify-between border-b border-white/15 bg-white/5 px-5 py-4 backdrop-blur-md sm:px-8">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/20">
             <GraduationCap className="h-5 w-5" />
@@ -126,6 +127,8 @@ export function LoginPage() {
           </p>
         </form>
       </main>
+
+      <SiteFooter backdrop={false} />
     </div>
   )
 }

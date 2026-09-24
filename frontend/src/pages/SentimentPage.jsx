@@ -60,16 +60,25 @@ export function SentimentPage() {
 
       <SentimentHero overall={overall} storyCount={filteredPosts.length} />
 
-      <OverallSentimentCard overall={overall} />
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <CategoryBreakdownChart rows={categoryRows} />
-        <SentimentTrendChart points={trendPoints} />
+      {/* Section ids are deep-link targets for the footer site map. */}
+      <div id="overall">
+        <OverallSentimentCard overall={overall} />
       </div>
 
-      <TopStoriesList posts={topStories} />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div id="by-topic" className="[&>*]:h-full">
+          <CategoryBreakdownChart rows={categoryRows} />
+        </div>
+        <div id="trend" className="[&>*]:h-full">
+          <SentimentTrendChart points={trendPoints} />
+        </div>
+      </div>
 
-      <div className="space-y-4 text-left">
+      <div id="most-talked">
+        <TopStoriesList posts={topStories} />
+      </div>
+
+      <div id="all-stories" className="space-y-4 text-left">
         <div>
           <h2 className="text-2xl font-bold text-[#1a2b5a]">All Stories</h2>
           <p className="mt-1 text-slate-600">Full sentiment breakdown for every story.</p>

@@ -11,3 +11,6 @@ export const HERO_IMAGE = '/campus/CarParking/main2.jpg'
 
 /** Aerial campus shot used by the sentiment dashboard hero. */
 export const SENTIMENT_HERO_IMAGE = '/campus/topviewjpg.jpg'
+
+/** Campus photo behind the site-map footer (the folder name has a space). */
+export const FOOTER_IMAGE = '/campus/Gate%202/main5.jpg'

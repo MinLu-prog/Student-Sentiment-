@@ -46,7 +46,7 @@ export function HeroContent({ search, onSearchChange, stats }) {
         ))}
       </div>
 
-      <div className="relative max-w-3xl">
+      <div id="search" data-focus-on-jump className="relative max-w-3xl">
         <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-sky-200/80" />
         <Input
           value={search}

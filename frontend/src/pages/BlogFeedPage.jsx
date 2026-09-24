@@ -29,10 +29,14 @@ export function BlogFeedPage() {
 
   return (
     <>
-      {featuredPost && <FeaturedPost post={featuredPost} />}
+      {featuredPost && (
+        <div id="featured">
+          <FeaturedPost post={featuredPost} />
+        </div>
+      )}
 
       {remainingPosts.length > 0 && (
-        <section>
+        <section id="more-stories">
           <h2 className="mb-4 text-left text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
             More Stories
           </h2>

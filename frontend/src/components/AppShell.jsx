@@ -1,15 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { HeroHeader } from '@/components/HeroHeader'
+import { HeroTopbar } from '@/components/HeroTopbar'
 import { CategoryFilter } from '@/components/CategoryFilter'
+import { ScrollManager } from '@/components/ScrollManager'
+import { SiteFooter } from '@/components/SiteFooter'
+import { CATEGORIES } from '@/data/posts'
 import { fetchCampusTourStops, fetchPosts, getStats } from '@/services/postsApi'
 
 export function AppShell() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [category, setCategory] = useState('All')
+  const [searchParams, setSearchParams] = useSearchParams()
+  // The topic filter lives in the URL (?category=...) so menu links, the
+  // back button, and shared links all land on the right topic.
+  const categoryParam = searchParams.get('category')
+  const category = CATEGORIES.includes(categoryParam) ? categoryParam : 'All'
   const [search, setSearch] = useState('')
   const [refreshKey, setRefreshKey] = useState(0)
+  const [navHeight, setNavHeight] = useState(0)
   const [posts, setPosts] = useState([])
   const [isLoadingPosts, setIsLoadingPosts] = useState(true)
   const [postsError, setPostsError] = useState('')
@@ -97,7 +106,7 @@ export function AppShell() {
     })
   }, [posts, category, search])
 
-  const stats = getStats(posts)
+  const stats = useMemo(() => getStats(posts), [posts])
   const featuredPost = filteredPosts.find((post) => post.featured) ?? filteredPosts[0]
   const remainingPosts = filteredPosts.filter((post) => post.id !== featuredPost?.id)
 
@@ -105,10 +114,22 @@ export function AppShell() {
     setRefreshKey((key) => key + 1)
   }
 
+  function setCategory(next) {
+    setSearchParams(
+      (current) => {
+        const params = new URLSearchParams(current)
+        if (next === 'All') params.delete('category')
+        else params.set('category', next)
+        return params
+      },
+      { replace: true },
+    )
+  }
+
   function handleSearchChange(value) {
     setSearch(value)
     if (location.pathname !== '/blog') {
-      navigate('/blog')
+      navigate({ pathname: '/blog', search: location.search })
     }
   }
 
@@ -116,19 +137,26 @@ export function AppShell() {
   const showCategoryFilter = location.pathname === '/blog' || location.pathname === '/sentiment'
 
   return (
-    <div className="min-h-svh bg-white">
+    <div className="flex min-h-svh flex-col bg-white">
+      <ScrollManager offset={navHeight} />
+
+      <HeroTopbar onHeightChange={setNavHeight} />
+
       <HeroHeader
         search={search}
         onSearchChange={handleSearchChange}
         stats={stats}
         showContent={showHeroContent}
+        topInset={navHeight}
       />
 
       {showCategoryFilter && (
-        <CategoryFilter active={category} onChange={setCategory} />
+        <div id="topics">
+          <CategoryFilter active={category} onChange={setCategory} />
+        </div>
       )}
 
-      <main className="bg-[#f8f9fa] px-5 py-8 sm:px-8">
+      <main className="flex-1 bg-[#f8f9fa] px-5 py-8 sm:px-8">
         <Outlet
           context={{
             category,
@@ -146,6 +174,8 @@ export function AppShell() {
           }}
         />
       </main>
+
+      <SiteFooter sitemap />
     </div>
   )
 }

@@ -1,11 +1,15 @@
 import { useMemo, useState } from 'react'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { Clock, Compass, Image as ImageIcon, Map as MapIcon, MapPin, RotateCw } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PanoramaViewer } from '@/components/panorama/PanoramaViewer'
 import { CampusMap } from '@/components/CampusMap'
 import { CampusGallery } from '@/components/CampusGallery'
+import { ScrollPane } from '@/components/ScrollPane'
 import { hasPanorama } from '@/config/panorama'
+
+const VISIBLE_STOPS = 10
 
 export function CampusTour({ stops }) {
   const defaultStopId = useMemo(() => {
@@ -24,8 +28,29 @@ export function CampusTour({ stops }) {
     setActiveStopId(defaultStopId)
   }
 
+  // Deep links (e.g. from the footer site map): ?stop=<id> opens that stop in the
+  // 360° view, ?view=map|360 picks the mode. Applied once per navigation
+  // (keyed on location.key) so clicking the same link again re-applies it.
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const [seenLocationKey, setSeenLocationKey] = useState(null)
+  if (location.key !== seenLocationKey) {
+    setSeenLocationKey(location.key)
+    const requestedStop = stops.find((stop) => String(stop.id) === searchParams.get('stop'))
+    const requestedView = searchParams.get('view')
+    if (requestedStop) {
+      setActiveStopId(requestedStop.id)
+      setMode('immersive')
+    } else if (requestedView === '360') {
+      setMode('immersive')
+    } else if (requestedView === 'map') {
+      setMode('map')
+    }
+  }
+
   const activeStop =
     stops.find((stop) => stop.id === activeStopId) ?? stops[0] ?? null
+  const activeStopIndex = stops.indexOf(activeStop)
 
   function openStop(stopId) {
     setActiveStopId(stopId)
@@ -42,7 +67,7 @@ export function CampusTour({ stops }) {
   }
 
   return (
-    <section className="mx-auto max-w-5xl text-left">
+    <section id="tour" className="mx-auto max-w-5xl text-left">
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="mb-2 flex items-center gap-2">
@@ -118,45 +143,60 @@ export function CampusTour({ stops }) {
           )}
 
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-            <nav aria-label="Tour stops" className="space-y-2">
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
-                Tour Stops
-              </p>
-              {stops.map((stop) => {
-                const isActive = stop.id === activeStop?.id
-                const has360 = hasPanorama(stop)
+            <nav aria-label="Tour stops" className="self-start">
+              <div className="mb-2 flex items-center justify-between">
+                <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+                  Tour Stops
+                </p>
+                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500">
+                  {stops.length} {stops.length === 1 ? 'stop' : 'stops'}
+                </span>
+              </div>
 
-                return (
-                  <button
-                    key={stop.id}
-                    type="button"
-                    onClick={() => setActiveStopId(stop.id)}
-                    className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors ${
-                      isActive
-                        ? 'border-[#1a2b5a] bg-[#1a2b5a] text-white'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                    }`}
-                  >
-                    <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                        isActive ? 'bg-white/20 text-white' : 'bg-[#1a2b5a] text-white'
+              {/* First VISIBLE_STOPS show at once; the rest scroll inside the list. */}
+              <ScrollPane
+                visibleCount={VISIBLE_STOPS}
+                activeIndex={activeStopIndex}
+                fadeClassName="from-[#f8f9fa]"
+                className="space-y-2 pr-1"
+              >
+                {stops.map((stop) => {
+                  const isActive = stop.id === activeStop?.id
+                  const has360 = hasPanorama(stop)
+
+                  return (
+                    <button
+                      key={stop.id}
+                      type="button"
+                      data-scroll-item
+                      onClick={() => setActiveStopId(stop.id)}
+                      className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors ${
+                        isActive
+                          ? 'border-[#1a2b5a] bg-[#1a2b5a] text-white'
+                          : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                       }`}
                     >
-                      {stop.pinNumber ?? '•'}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold">{stop.name}</span>
                       <span
-                        className={`mt-0.5 block text-xs ${
-                          isActive ? 'text-blue-100' : 'text-slate-500'
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                          isActive ? 'bg-white/20 text-white' : 'bg-[#1a2b5a] text-white'
                         }`}
                       >
-                        {has360 ? '360° ready' : 'Photo gallery'}
+                        {stop.pinNumber ?? '•'}
                       </span>
-                    </span>
-                  </button>
-                )
-              })}
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold">{stop.name}</span>
+                        <span
+                          className={`mt-0.5 block text-xs ${
+                            isActive ? 'text-blue-100' : 'text-slate-500'
+                          }`}
+                        >
+                          {has360 ? '360° ready' : 'Photo gallery'}
+                        </span>
+                      </span>
+                    </button>
+                  )
+                })}
+              </ScrollPane>
             </nav>
 
             <div className="space-y-4">
@@ -205,7 +245,8 @@ export function CampusTour({ stops }) {
                             {activeStop.gallery.length === 1 ? 'photo' : 'photos'}
                           </span>
                         </div>
-                        <CampusGallery images={activeStop.gallery} />
+                        {/* Keyed by stop so switching stops starts the gallery at the top. */}
+                        <CampusGallery key={activeStop.id} images={activeStop.gallery} />
                       </div>
                     ) : (
                       <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-sm text-slate-400">
