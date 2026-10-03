@@ -7,3 +7,8 @@ node_modules
 # User-uploaded images — keep the directory, not its contents
 uploads/*
 !uploads/.gitkeep
+
+# Fine-tuned model weights (model.safetensors is ~256MB — over GitHub's
+# 100MB hard limit) and the Python virtualenv for model_service/
+model/
+model_service/.venv

@@ -31,9 +31,9 @@ CommentRouter.post(
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      // Sentiment is computed here, not trusted from the client — VADER
+      // Sentiment is computed here, not trusted from the client — the model
       // scores the actual comment text so the label can't be spoofed.
-      const sentiment = analyzeSentiment(trimmedContent);
+      const sentiment = await analyzeSentiment(trimmedContent);
 
       const comment = await prisma.comment.create({
         data: {
