@@ -9,6 +9,7 @@ import { BlogFeedPage } from '@/pages/BlogFeedPage'
 import { PostDetailPage } from '@/pages/PostDetailPage'
 import { CampusTourPage } from '@/pages/CampusTourPage'
 import { SentimentPage } from '@/pages/SentimentPage'
+import { FacultiesPage } from '@/pages/FacultiesPage'
 import { AdminPostsPage } from '@/pages/admin/AdminPostsPage'
 import { AdminPostFormPage } from '@/pages/admin/AdminPostFormPage'
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage'
@@ -26,6 +27,7 @@ function App() {
         <Route path="/blog/:postId" element={<PostDetailPage />} />
         <Route path="/campus-tour" element={<CampusTourPage />} />
         <Route path="/sentiment" element={<SentimentPage />} />
+        <Route path="/faculties-and-staff" element={<FacultiesPage />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/admin" element={<AdminShell />}>

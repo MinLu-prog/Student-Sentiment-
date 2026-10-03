@@ -38,10 +38,11 @@ function Sitemap() {
   return (
     <nav
       aria-label="Site map"
-      // Brand column + three link columns + Account.
-      className="relative mx-auto grid max-w-6xl gap-10 px-5 py-12 text-left sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.4fr_repeat(4,minmax(0,1fr))]"
+      // Brand column + four link columns + Account. Below xl the brand takes
+      // its own row so the five link columns aren't squeezed.
+      className="relative mx-auto grid max-w-6xl gap-10 px-5 py-12 text-left sm:grid-cols-2 sm:px-8 lg:grid-cols-5 xl:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))]"
     >
-      <div className="sm:col-span-2 lg:col-span-1">
+      <div className="sm:col-span-2 lg:col-span-5 xl:col-span-1">
         <Link to="/blog" className="inline-flex items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 shadow-[0_4px_16px_rgba(9,20,50,0.3)] ring-1 ring-white/25 backdrop-blur-md">
             <GraduationCap className="h-5 w-5" />

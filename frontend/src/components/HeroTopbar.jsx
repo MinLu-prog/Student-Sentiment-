@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, MapPinned, ShieldCheck } from 'lucide-react'
+import { BarChart3, BookOpen, MapPinned, ShieldCheck, Users } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import {
@@ -32,6 +32,9 @@ export function HeroTopbar({ onHeightChange }) {
         </GlassNavLink>
         <GlassNavLink to="/sentiment" icon={BarChart3}>
           Comment Analysis
+        </GlassNavLink>
+        <GlassNavLink to="/faculties-and-staff" icon={Users}>
+          Faculties &amp; Staff
         </GlassNavLink>
         {user?.role === 'ADMIN' && (
           <GlassNavLink to="/admin" icon={ShieldCheck}>
