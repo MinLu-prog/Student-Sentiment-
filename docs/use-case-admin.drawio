@@ -1,0 +1,97 @@
+<mxfile host="65bd71144e">
+    <diagram id="admin" name="Admin Use Cases">
+        <mxGraphModel dx="1386" dy="714" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="a-actor" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="360" width="50" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-system" value="MIIT Student Sentiment&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff5f5;strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1a2b5a;verticalAlign=top;align=center;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="90" width="880" height="720" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-pkg-auth" value="Authentication" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#fde8e8;strokeColor=#b85450;width=90;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="190" width="800" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-login" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="210" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-pkg-posts" value="Post Management" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#fde8e8;strokeColor=#b85450;width=150;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="310" width="800" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-create" value="Create Post" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="330" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-delete" value="Delete Post" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="590" y="360" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-feature" value="Set Featured Post" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="330" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-pkg-users" value="User Management" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#fde8e8;strokeColor=#b85450;width=150;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="460" width="800" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-list-users" value="List All Users" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="505" width="140" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-create-user" value="Create User" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="505" width="130" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-delete-user" value="Delete User" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="590" y="505" width="130" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-view-user" value="View User Profile" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="505" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-pkg-content" value="Content &amp;amp; Tour" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#fde8e8;strokeColor=#b85450;width=130;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="610" width="800" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-del-comment" value="Delete Comment" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="655" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-uc-manage-tour" value="Manage Tour Stops" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="655" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e1" style="endArrow=none;html=1;strokeColor=#b85450;strokeWidth=2;" parent="1" source="a-actor" target="a-uc-login" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e2" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-create" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e3" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-delete" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e4" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-feature" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e5" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-list-users" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e6" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-create-user" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e7" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-delete-user" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e8" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-view-user" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e9" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-del-comment" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-e10" style="endArrow=none;html=1;strokeColor=#b85450;" parent="1" source="a-actor" target="a-uc-manage-tour" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Logout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="210" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" style="endArrow=none;html=1;strokeColor=#b85450;strokeWidth=2;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="110" y="390" as="sourcePoint"/>
+                        <mxPoint x="389" y="265" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

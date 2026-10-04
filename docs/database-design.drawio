@@ -1,0 +1,179 @@
+<mxfile host="65bd71144e">
+    <diagram id="db-design" name="Database Design">
+        <mxGraphModel dx="1838" dy="857" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;MIIT Student Sentiment — Database Design (PostgreSQL / Prisma)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=18;fontColor=#1a2b5a;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="20" width="700" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl-user" value="User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#1a2b5a;fontColor=#ffffff;strokeColor=#0f172a;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="280" width="240" height="148" as="geometry"/>
+                </mxCell>
+                <mxCell id="u-id" value="id : String (cuid)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-user" vertex="1">
+                    <mxGeometry y="28" width="240" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="u-name" value="name : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-user" vertex="1">
+                    <mxGeometry y="52" width="240" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="u-email" value="email : String (unique)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-user" vertex="1">
+                    <mxGeometry y="76" width="240" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="u-pass" value="passwordHash : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-user" vertex="1">
+                    <mxGeometry y="100" width="240" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="u-role" value="role : Role (USER | ADMIN)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-user" vertex="1">
+                    <mxGeometry y="124" width="240" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl-post" value="Post" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#1a2b5a;fontColor=#ffffff;strokeColor=#0f172a;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="240" width="260" height="292" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-id" value="id : Int (autoincrement)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="28" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-feat" value="featured : Boolean" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="52" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-cat" value="category : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="76" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-campus" value="campus : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="100" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-date" value="date : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="124" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-title" value="title : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="148" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-excerpt" value="excerpt : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="172" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-body" value="body : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="196" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-image" value="image : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="220" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-tags" value="tags : String[]" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="244" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="p-reads" value="reads : Int" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-post" vertex="1">
+                    <mxGeometry y="268" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl-comment" value="Comment" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#1a2b5a;fontColor=#ffffff;strokeColor=#0f172a;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="620" width="260" height="172" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-id" value="id : String (cuid)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="28" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-content" value="content : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="52" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-sent" value="sentiment : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="76" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-created" value="createdAt : DateTime" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="100" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-postid" value="postId : Int" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="124" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-userid" value="userId : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-comment" vertex="1">
+                    <mxGeometry y="148" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl-like" value="Like  &lt;font style=&quot;font-size:10px&quot;&gt;(junction table)&lt;/font&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#d6b656;fontColor=#ffffff;strokeColor=#b8860b;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="380" width="260" height="124" as="geometry"/>
+                </mxCell>
+                <mxCell id="l-id" value="id : String (cuid)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-like" vertex="1">
+                    <mxGeometry y="28" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="l-created" value="createdAt : DateTime" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-like" vertex="1">
+                    <mxGeometry y="52" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="l-postid" value="postId : Int" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-like" vertex="1">
+                    <mxGeometry y="76" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="l-userid" value="userId : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-like" vertex="1">
+                    <mxGeometry y="100" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="l-unique" value="UNIQUE (postId, userId)" style="text;html=1;strokeColor=#b8860b;fillColor=#fff2cc;align=center;fontSize=10;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="510" width="260" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="tbl-tour" value="CampusTourStop" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=28;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#1a2b5a;fontColor=#ffffff;strokeColor=#0f172a;" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="70" width="260" height="172" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-id" value="id : String (cuid)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="28" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-campus" value="campus : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="52" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-name" value="name : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="76" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-desc" value="description : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="100" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-dur" value="duration : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="124" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-pano" value="panorama : Json? (nullable)" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" parent="tbl-tour" vertex="1">
+                    <mxGeometry y="148" width="260" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="t-note" value="Standalone table — filtered by campus string at query time" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=6;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="255" width="260" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl-user-comment" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;One-to-Many" style="text;html=1;strokeColor=none;fillColor=#ffffff;align=center;fontSize=10;fontColor=#1a2b5a;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="560" width="80" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl-post-comment" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;One-to-Many" style="text;html=1;strokeColor=none;fillColor=#ffffff;align=center;fontSize=10;fontColor=#1a2b5a;" parent="1" vertex="1">
+                    <mxGeometry x="680" y="560" width="80" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl-user-like" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;One-to-Many" style="text;html=1;strokeColor=none;fillColor=#ffffff;align=center;fontSize=10;fontColor=#1a2b5a;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="420" width="80" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl-post-like" value="&lt;b&gt;1 : N&lt;/b&gt;&lt;br&gt;One-to-Many" style="text;html=1;strokeColor=none;fillColor=#ffffff;align=center;fontSize=10;fontColor=#1a2b5a;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="330" width="80" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl-mn" value="&lt;b&gt;M : N&lt;/b&gt;&lt;br&gt;Many-to-Many&lt;br&gt;(via Like table)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#b8860b;fontSize=11;align=center;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="240" width="120" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="r-user-comment" style="endArrow=ERmany;startArrow=ERone;html=1;strokeWidth=2;strokeColor=#6c8ebf;endFill=1;startFill=1;" parent="1" source="tbl-user" target="tbl-comment" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="200" y="600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="r-post-comment" style="endArrow=ERmany;startArrow=ERone;html=1;strokeWidth=2;strokeColor=#6c8ebf;endFill=1;startFill=1;" parent="1" source="tbl-post" target="tbl-comment" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="850" y="580"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="r-user-like" style="endArrow=ERmany;startArrow=ERone;html=1;strokeWidth=2;strokeColor=#b8860b;endFill=1;startFill=1;" parent="1" source="tbl-user" target="tbl-like" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r-post-like" style="endArrow=ERmany;startArrow=ERone;html=1;strokeWidth=2;strokeColor=#b8860b;endFill=1;startFill=1;" parent="1" source="tbl-post" target="tbl-like" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r-user-post-mn" style="endArrow=ERmany;startArrow=ERmany;html=1;strokeWidth=2;strokeColor=#b85450;dashed=1;endFill=1;startFill=1;" parent="1" source="tbl-user" target="tbl-post" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="200" y="220"/>
+                            <mxPoint x="850" y="220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cascade-note" value="&lt;b&gt;On delete cascade:&lt;/b&gt;&lt;br&gt;Delete Post → deletes its Comments &amp;amp; Likes&lt;br&gt;Delete User → deletes their Comments &amp;amp; Likes" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#e8f0fe;strokeColor=#6c8ebf;align=left;spacingLeft=6;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="820" width="280" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="summary" value="&lt;b&gt;Relationship Summary&lt;/b&gt;&lt;br&gt;• User &amp;lt;1:N&amp;gt; Comment&amp;nbsp;&amp;nbsp;• Post &amp;lt;1:N&amp;gt; Comment&lt;br&gt;• User &amp;lt;1:N&amp;gt; Like&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;• Post &amp;lt;1:N&amp;gt; Like&lt;br&gt;• User &amp;lt;M:N&amp;gt; Post through Like (each user likes a post at most once)&lt;br&gt;• CampusTourStop — independent (no links to other tables)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f6ff;strokeColor=#6c8ebf;align=left;spacingLeft=10;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="820" width="420" height="90" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

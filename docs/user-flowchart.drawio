@@ -1,0 +1,272 @@
+<mxfile host="65bd71144e">
+    <diagram id="user-flow" name="User Flowchart">
+        <mxGraphModel dx="1663" dy="857" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="start" value="Start" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="400" y="50" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user-input" value="User" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="385" y="115" width="130" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="home" value="Open MIIT App&lt;br&gt;(Home)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="375" y="180" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="d-newuser" value="Has&lt;br&gt;Account?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="255" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="guest-label" value="No" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="280" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="guest" value="Continue as Guest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="360" width="150" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="yes-label" value="Yes" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="280" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="creds" value="Email, Password" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="350" width="150" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="login" value="Login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="575" y="420" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="load-feed" value="Load Campus Feed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="375" y="490" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="d-role" value="User&lt;br&gt;Role?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="390" y="570" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-header" value="Visitor&lt;br&gt;(Guest)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="60" y="690" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="v1" value="Browse Blog Feed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="750" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v2" value="Search &amp;amp; Filter Posts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="800" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v3" value="View Post Details" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="850" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v4" value="View Sentiment Analysis" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="900" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v5" value="Explore Campus Tour" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="950" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v6" value="View Panorama" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="1000" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-more" value="Any more&lt;br&gt;actions?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="75" y="1060" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="s-header" value="Student&lt;br&gt;(USER)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="320" y="690" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="Browse &amp;amp; View Posts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="750" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="View Sentiment Analysis" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="800" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="Like / Unlike Post" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="850" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s4" value="Add Comment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="900" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s5" value="Explore Campus Tour" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="950" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s-more" value="Any more&lt;br&gt;actions?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="335" y="1010" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-header" value="Administrator&lt;br&gt;(ADMIN)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="580" y="690" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" value="Create Post" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="750" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a2" value="Delete Post" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="800" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a3" value="Manage Users" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="850" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a4" value="Manage Tour Stops" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="900" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a5" value="Delete Comment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="950" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a6" value="Update Database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="1000" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a-more" value="Any more&lt;br&gt;actions?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="595" y="1060" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="db" value="PostgreSQL&lt;br&gt;Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="960" width="90" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="logout" value="Log Out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="385" y="1200" width="130" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="end" value="End" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="400" y="1270" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="start" target="user-input" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="user-input" target="home" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="home" target="d-newuser" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="d-newuser" target="guest" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="d-newuser" target="creds" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="creds" target="login" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="guest" target="load-feed" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="255" y="515"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="login" target="load-feed" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="635" y="515"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="load-feed" target="d-role" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="d-role" target="v-header" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="d-role" target="s-header" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="d-role" target="a-header" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v-header" target="v1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v1" target="v2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v2" target="v3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v3" target="v4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v4" target="v5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v5" target="v6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v6" target="v-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ev-yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v-more" target="v1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="30" y="1095"/>
+                            <mxPoint x="30" y="770"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ev-no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="v-more" target="logout" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="140" y="1220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="es1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s-header" target="s1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s1" target="s2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s2" target="s3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s3" target="s4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s4" target="s5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s5" target="s-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="es-yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s-more" target="s1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="290" y="1045"/>
+                            <mxPoint x="290" y="770"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="es-no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="s-more" target="logout" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a-header" target="a1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a1" target="a2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a2" target="a3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a3" target="a4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a4" target="a5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a5" target="a6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a6" target="a-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#000000;" parent="1" source="a6" target="db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ea-yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a-more" target="a1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="770" y="1095"/>
+                            <mxPoint x="770" y="770"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ea-no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="a-more" target="logout" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="660" y="1220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e-end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" parent="1" source="logout" target="end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

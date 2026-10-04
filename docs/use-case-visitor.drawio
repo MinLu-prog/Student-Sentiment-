@@ -1,0 +1,97 @@
+<mxfile host="65bd71144e">
+    <diagram id="visitor" name="Visitor Use Cases">
+        <mxGraphModel dx="1833" dy="857" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="v-actor" value="Visitor&lt;br&gt;(Guest)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="320" width="50" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-system" value="MIIT Student Sentiment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f6ff;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1a2b5a;verticalAlign=top;align=center;spacingTop=10;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="90" width="820" height="680" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-pkg-browse" value="Browse &amp;amp; Discover" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;width=120;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="140" width="740" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc1" value="Browse Blog Feed" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="190" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc3" value="Search &amp;amp; Filter Posts" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="190" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc4" value="View Post Details" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="270" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc5" value="View Activity Stats" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="270" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc6" value="Filter by Category" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="710" y="230" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-pkg-analysis" value="Sentiment &amp;amp; Insights" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;width=130;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="370" width="740" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc7" value="View Sentiment Analysis" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="420" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc8" value="View Comment Breakdown" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="420" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc9" value="Read Comments on Posts" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="420" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-pkg-tour" value="Campus Tour" style="shape=umlFrame;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;width=90;height=30;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="520" width="740" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc10" value="Explore Campus Tour" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="570" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc11" value="View 360° Panorama" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="570" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-uc12" value="Browse Tour Stops" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="720" y="570" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e1" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e3" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e4" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e5" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e6" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e7" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e8" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e9" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e10" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e11" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-e12" style="endArrow=none;html=1;strokeColor=#6c8ebf;" parent="1" source="v-actor" target="v-uc12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-ext1" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=10;" parent="1" source="v-uc4" target="v-uc1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v-ext2" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;strokeColor=#666666;fontSize=10;" parent="1" source="v-uc11" target="v-uc10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
