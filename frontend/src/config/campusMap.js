@@ -13,6 +13,8 @@
  * traced SVG), drop the new file in public/campus/ and change `src` + `width`/
  * `height` to its intrinsic pixel size. Nothing else needs to change.
  */
+import { getStopPhotos, getStopVideos } from '@/config/stopMedia'
+
 export const CAMPUS_MAP = {
   src: '/campus/map.svg',
   // Intrinsic size of the base image — defines the CRS.Simple coordinate space.
@@ -51,9 +53,17 @@ export function hasMapPosition(stop) {
   )
 }
 
-/** First gallery image for a stop, used as the map-popup thumbnail. */
+/**
+ * Thumbnail for the map popup: the first still in the gallery, falling back to
+ * a video's poster frame. Must skip video entries — the gallery holds both,
+ * and handing an .MP4 to an <img> renders a broken-image icon.
+ */
 export function getStopCover(stop) {
-  return stop?.gallery?.[0]?.src ?? null
+  const photo = getStopPhotos(stop)[0]
+  if (photo) return photo.src
+
+  const posterFrame = getStopVideos(stop).find((video) => video.poster)
+  return posterFrame?.poster ?? null
 }
 
 /**

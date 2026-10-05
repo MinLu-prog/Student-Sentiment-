@@ -379,6 +379,15 @@ export const CAMPUS_TOUR_STOPS = [
     map: { x: 0.574, y: 0.533 },
     gallery: [
       { src: '/campus/LabRooms/photo_90_2026-07-26_12-01-16.jpg', caption: 'Lab Rooms — photo 1' },
+      { src: '/campus/LabRooms/robotic_lab.jpg', caption: 'Lab Rooms — robotics bench' },
+      // Video last, matching the card order (gallery first, then video).
+      {
+        type: 'video',
+        src: '/campus/LabRooms/robotic_lab.MP4',
+        poster: '/campus/LabRooms/robotic_lab_poster.jpg',
+        caption: 'Inside the MIIT Robotics Lab',
+        duration: '2:11',
+      },
     ],
   },
   {

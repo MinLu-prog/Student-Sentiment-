@@ -1,13 +1,23 @@
 import { useMemo, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
-import { Clock, Compass, Image as ImageIcon, Map as MapIcon, MapPin, RotateCw } from 'lucide-react'
+import {
+  Clock,
+  Compass,
+  Image as ImageIcon,
+  Map as MapIcon,
+  MapPin,
+  RotateCw,
+  Video as VideoIcon,
+} from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PanoramaViewer } from '@/components/panorama/PanoramaViewer'
 import { CampusMap } from '@/components/CampusMap'
 import { CampusGallery } from '@/components/CampusGallery'
+import { CampusVideo } from '@/components/CampusVideo'
 import { ScrollPane } from '@/components/ScrollPane'
 import { hasPanorama } from '@/config/panorama'
+import { getStopPhotos, getStopVideos } from '@/config/stopMedia'
 
 const VISIBLE_STOPS = 10
 
@@ -51,6 +61,11 @@ export function CampusTour({ stops }) {
   const activeStop =
     stops.find((stop) => stop.id === activeStopId) ?? stops[0] ?? null
   const activeStopIndex = stops.indexOf(activeStop)
+
+  // A stop's gallery mixes stills and clips; split them so the lightbox only
+  // ever receives images and the photo count stays a photo count.
+  const stopVideos = getStopVideos(activeStop)
+  const stopPhotos = getStopPhotos(activeStop)
 
   function openStop(stopId) {
     setActiveStopId(stopId)
@@ -163,6 +178,13 @@ export function CampusTour({ stops }) {
                 {stops.map((stop) => {
                   const isActive = stop.id === activeStop?.id
                   const has360 = hasPanorama(stop)
+                  const hasVideo = getStopVideos(stop).length > 0
+                  const mediaLabel = [
+                    has360 ? '360° ready' : null,
+                    hasVideo ? 'Video' : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ') || 'Photo gallery'
 
                   return (
                     <button
@@ -190,7 +212,7 @@ export function CampusTour({ stops }) {
                             isActive ? 'text-blue-100' : 'text-slate-500'
                           }`}
                         >
-                          {has360 ? '360° ready' : 'Photo gallery'}
+                          {mediaLabel}
                         </span>
                       </span>
                     </button>
@@ -233,7 +255,7 @@ export function CampusTour({ stops }) {
                     </p>
 
                     {/* Respective images gallery */}
-                    {activeStop.gallery?.length > 0 ? (
+                    {stopPhotos.length > 0 ? (
                       <div className="mt-6">
                         <div className="mb-3 flex items-center justify-between">
                           <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
@@ -241,17 +263,43 @@ export function CampusTour({ stops }) {
                             Photo Gallery
                           </p>
                           <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500">
-                            {activeStop.gallery.length}{' '}
-                            {activeStop.gallery.length === 1 ? 'photo' : 'photos'}
+                            {stopPhotos.length}{' '}
+                            {stopPhotos.length === 1 ? 'photo' : 'photos'}
                           </span>
                         </div>
                         {/* Keyed by stop so switching stops starts the gallery at the top. */}
-                        <CampusGallery key={activeStop.id} images={activeStop.gallery} />
+                        <CampusGallery key={activeStop.id} images={stopPhotos} />
                       </div>
                     ) : (
-                      <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-sm text-slate-400">
-                        <ImageIcon className="h-4 w-4" />
-                        Photos for this stop are coming soon.
+                      stopVideos.length === 0 && (
+                        <div className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-sm text-slate-400">
+                          <ImageIcon className="h-4 w-4" />
+                          Photos for this stop are coming soon.
+                        </div>
+                      )
+                    )}
+
+                    {/* Video walkthroughs — below the stills, so the gallery
+                        stays the first thing reached on scroll. */}
+                    {stopVideos.length > 0 && (
+                      <div className="mt-6">
+                        <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#1a2b5a]">
+                          <VideoIcon className="h-3.5 w-3.5" />
+                          Video
+                        </p>
+                        <div className="space-y-4">
+                          {stopVideos.map((video) => (
+                            // Keyed by stop + src so switching stops unmounts
+                            // any playing clip instead of reusing the element.
+                            <CampusVideo
+                              key={`${activeStop.id}-${video.src}`}
+                              src={video.src}
+                              poster={video.poster}
+                              caption={video.caption}
+                              duration={video.duration}
+                            />
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
